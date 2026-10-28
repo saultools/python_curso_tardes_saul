@@ -2,7 +2,7 @@
 # Hacer un programa que solicite la edad y nos muestre a que grupo pertenece (el más ccercano a su edad). 
 # La edad debe estar ente 9 y 18 años.
 
-#solución de Saúl primera
+#solución de Saúl primera (bien, pero no elegante)
 edad=int(input("Introduce tu edad "))
 
 if edad>=9 and edad<=13:
@@ -15,7 +15,7 @@ elif edad>9 or edad<18:
 #tip de Antonio
 limite_inf,limite_sup,benjamin,alevin=9,18,10,16
 
-#solución de Saúl segunda (mal, por que no funciona para los 13 años)
+#solución de Saúl segunda (mal, por que no funciona desde la media de 13 años)
 if edad>=alevin and edad<=benjamin:
     print("Alevín")
 elif edad>=benjamin and edad<=limite_sup:
