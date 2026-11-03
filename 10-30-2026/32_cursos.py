@@ -7,7 +7,12 @@ lista_cursos=cursos.split(",")
 lenguaje=input("Qúe lenguaje te interesa?: ")
 if lenguaje.lower() in lista_cursos:
     print(f"{lenguaje} está en la lista")
-else:
-    print(f"{lenguaje} NO está en la lista")
+
+print(20*"-")
 
 #solución de Antonio:
+lista_cursos=cursos.split(",")
+lenguaje=input("Que lenguaje te interesa?")
+for c in lista_cursos:
+    if lenguaje.lower() in c.lower().split(" "):
+        print(c)
