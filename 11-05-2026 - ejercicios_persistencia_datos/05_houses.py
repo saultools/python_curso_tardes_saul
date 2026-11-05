@@ -1,0 +1,1 @@
+#Ejercicio para casa: con el csv 5: basado en el presuspuesto, dar las casas que se puede permitir el usuario
