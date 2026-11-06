@@ -35,4 +35,4 @@ def curso_media_mayor():
 st.write(curso_antes())
 st.write(curso_media_mayor()) 
 
-#streamlit run -f este_filename.py
+#streamlit run este_filename.py
