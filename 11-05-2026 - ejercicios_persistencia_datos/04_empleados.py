@@ -10,7 +10,7 @@ with open("04_empleados.csv") as f:
 print(20*"-")
 
 with open("04_empleados.csv","r") as f:
-    datos=csv.DictReader(f)  # la función csv.DictReader, escupe los objetos Json suletos
+    datos=csv.DictReader(f)  # la función csv.DictReader, escupe los objetos Diccionario/Json suletos
     for row in datos:
         print(row)
 print(20*"-")
