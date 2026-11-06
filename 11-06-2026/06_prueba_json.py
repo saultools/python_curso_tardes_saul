@@ -1,5 +1,11 @@
+import datetime as dt
+import streamlit as st
 import json
-with open("06_alumnos.json","r") as f:
+
+#demostración de Antonio de uso de Json:
+jsonfile="06_alumnos.json"
+with open(jsonfile,"r") as f:
     alumnos=json.load(f)
 for a in alumnos:
     print(a["nombre"])
+print(20*"-")
