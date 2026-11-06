@@ -8,7 +8,7 @@ def distancia(p1,p2):
    return math.hypot(p1[0]-p2[0],p1[1]-p2[1]) 
 
 dists=[]
-with open("06_coordenadas.csv","r") as f:
+with open("05_coordenadas.csv","r") as f:
     rows=csv.reader(f)
     for value in rows:
         if value is str:
@@ -32,7 +32,7 @@ def distancia(punto1,punto2):
    return math.hypot(punto1[0]-punto2[0],punto1[1]-punto2[1]) 
 
 pos_usuario=(int(input("Tu posición x: ")),int(input("Tu posición y: ")))
-dir_fichero="06_coordenadas.csv"
+dir_fichero="05_coordenadas.csv"
 #En esta variable se obtendrá la distnacia más corta
 distancia_corta=None
 #En esta variable se deberá obtener la tupla de la tienda más cercana
