@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profe Py - Academia interactiva de Python</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--bg:#0e0f12;--panel:#16181d;--panel2:#1d2027;--line:#2c3039;--tx:#ecebe6;--mut:#a3a3ad;--ac:#ff7a1a;--ac-t:#ffa35c;--ok:#4ade80;--ko:#f87171;--r:0px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.55;font-size:16px;min-height:100vh;padding-bottom:150px}
+button,input,select{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;background:none;border:1px solid var(--line);padding:.55rem .9rem;border-radius:var(--r);transition:background .15s,border-color .15s,color .15s}
+button:hover{border-color:var(--ac)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+input[type=text],input[type=number]{background:var(--bg);border:1px solid var(--line);padding:.55rem .7rem;border-radius:var(--r);width:100%}
+input:focus{border-color:var(--ac)}
+code,pre,.mono{font-family:'JetBrains Mono',monospace}
+.btn{background:var(--ac);color:#0e0f12;border-color:var(--ac);font-weight:700}
+.btn:hover{background:var(--ac-t);border-color:var(--ac-t)}
+.lbl{font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--mut)}
+.ac{color:var(--ac-t)}
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.2rem;padding:.6rem 1.2rem}
+.logo{font-weight:700;font-size:1.25rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem}
+.logo i{color:var(--ac)}
+.seg{display:inline-flex;border:1px solid var(--line);flex-wrap:wrap}
+.seg button{border:0;border-right:1px solid var(--line);padding:.45rem .85rem;font-size:.9rem}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--tx);color:var(--bg);font-weight:600}
+.seg button:hover{background:var(--panel2)}
+.seg button.on:hover{background:var(--tx)}
+.xp{margin-left:auto;display:flex;align-items:center;gap:.7rem;font-size:.85rem}
+.xpbar{width:110px;height:6px;background:var(--line)}
+.xpbar div{height:100%;background:var(--ac);transition:width .4s}
+main{max-width:1180px;margin:0 auto;padding:1.5rem 1.2rem}
+h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em;margin-bottom:.4rem;text-wrap:balance}
+h3{font-size:1.1rem;margin:1.2rem 0 .4rem}
+p{max-width:68ch;text-wrap:pretty}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem;align-items:center;padding:2rem 0 2.5rem;border-bottom:1px solid var(--line)}
+.hero p.lead{font-size:1.2rem;color:var(--mut);margin-top:1.2rem}
+.hero .cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.6rem}
+.fig{border:1px solid var(--line);background:var(--panel);padding:1rem}
+.fig figcaption{margin-top:.6rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stats div{padding:1.2rem 1rem;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:0}
+.stats b{display:block;font-size:2rem;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.levels{display:grid}
+.levels .row{display:grid;grid-template-columns:90px 1fr auto;gap:1rem;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--line)}
+.levels .row .n{font-size:2.6rem;font-weight:700;color:var(--ac-t);letter-spacing:-.04em}
+.sec{padding:2rem 0}
+.dot{display:inline-block;width:.6rem;height:.6rem;background:var(--ac);border-radius:50%;margin-right:.5rem}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:2rem;align-items:start}
+.side{position:sticky;top:4.2rem;border:1px solid var(--line);max-height:calc(100vh - 6rem);overflow:auto}
+.side button{display:flex;gap:.7rem;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);padding:.7rem .9rem}
+.side button.on{background:var(--ac);color:#0e0f12;font-weight:700}
+.side button i.s{margin-left:auto;font-size:.8rem}
+.side button .lv{font-size:.65rem}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;border:1px solid var(--line);padding:.1rem .4rem;color:var(--mut)}
+.lesson ul{list-style:none;margin:.8rem 0}
+.lesson li{padding:.45rem 0 .45rem 1.4rem;position:relative;border-bottom:1px solid var(--line);max-width:72ch}
+.lesson li:before{content:"";position:absolute;left:0;top:.95rem;width:.55rem;height:.55rem;background:var(--ac);border-radius:50%}
+pre.code{background:#0a0b0d;border:1px solid var(--line);border-left:3px solid var(--ac);padding:1rem;overflow:auto;font-size:.88rem;line-height:1.6;margin:.8rem 0;white-space:pre}
+.k{color:#ff9f5a;font-weight:500}.s{color:#7fd6a0}.c{color:#7d8290;font-style:italic}.nn{color:#7cc4ff}
+.why{border:1px solid var(--ac);padding:1rem 1.1rem;margin:1.2rem 0;background:var(--panel)}
+.why .lbl{color:var(--ac-t);display:block;margin-bottom:.3rem}
+.note{border-left:3px solid var(--mut);padding:.6rem 1rem;color:var(--mut);margin:1rem 0;font-size:.92rem;max-width:72ch}
+.panel{border:1px solid var(--line);background:var(--panel);padding:1.1rem;margin:1.2rem 0}
+.panel>.lbl{display:block;margin-bottom:.7rem;color:var(--ac-t)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.cells{display:flex;gap:0;flex-wrap:wrap}
+.cell{min-width:56px;text-align:center;border:1px solid var(--line);margin-right:-1px;padding:.2rem .3rem;font-family:'JetBrains Mono',monospace;transition:background .2s}
+.cell small{display:block;font-size:.7rem;color:var(--mut)}
+.cell.hi{background:var(--ac);color:#0e0f12}.cell.hi small{color:#0e0f12}
+.cell b{display:block;font-size:1.1rem;padding:.3rem 0}
+.out{background:#0a0b0d;border:1px solid var(--line);padding:.7rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.9rem;min-height:2.6rem;white-space:pre-wrap}
+.out .e{color:var(--ko)}.out .g{color:var(--ok)}
+.tracecode{background:#0a0b0d;border:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:.9rem}
+.tracecode div{padding:.15rem .8rem;white-space:pre;border-left:3px solid transparent}
+.tracecode div.cur{background:#2a1a0c;border-left-color:var(--ac)}
+.tracecode i{display:inline-block;width:1.6rem;color:#6b7080;font-style:normal}
+.vbox{display:inline-block;border:1px solid var(--line);margin:0 .5rem .5rem 0;min-width:84px;text-align:center}
+.vbox span{display:block;font-family:'JetBrains Mono',monospace;font-size:.75rem;background:var(--panel2);padding:.1rem .4rem;color:var(--mut)}
+.vbox b{display:block;padding:.45rem .6rem;font-family:'JetBrains Mono',monospace;transition:background .25s}
+.vbox.ch b{background:var(--ac);color:#0e0f12}
+table{border-collapse:collapse;width:100%;font-family:'JetBrains Mono',monospace;font-size:.85rem}
+th,td{border:1px solid var(--line);padding:.35rem .6rem;text-align:left}
+th{background:var(--panel2);color:var(--ac-t);font-weight:500}
+td.hi{background:var(--ac);color:#0e0f12}
+.tree{font-family:'JetBrains Mono',monospace;font-size:.85rem}
+.node{border:1px solid var(--line);margin:.3rem 0;background:var(--bg)}
+.node>.hd{display:flex;gap:.6rem;align-items:center;padding:.25rem .6rem;background:var(--panel2);cursor:pointer;font-size:.75rem;color:var(--mut)}
+.node>.hd:hover{background:#262a33}
+.node>.hd.sel,.leaf.sel{outline:2px solid var(--ac)}
+.item{display:flex;gap:.6rem;align-items:flex-start;padding:.2rem .6rem}
+.item>.ix{min-width:3.4rem;color:var(--ac-t);padding-top:.3rem}
+.leaf{display:inline-block;padding:.25rem .6rem;border:1px solid var(--line);cursor:pointer;background:var(--panel)}
+.leaf:hover{border-color:var(--ac)}
+.leaf.ok{background:var(--ac);color:#0e0f12}
+.q{border:1px solid var(--line);padding:1.1rem;margin:1rem 0;background:var(--panel)}
+.q .qt{font-weight:600;margin-bottom:.4rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.8rem}
+.opts button{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.88rem;padding:.6rem .8rem}
+.opts button.good,.good{border-color:var(--ok);background:#12301f}
+.opts button.bad{border-color:var(--ko);background:#34161a}
+.fb{margin-top:.8rem;padding:.7rem 1rem;border-left:3px solid var(--mut);background:var(--panel2);font-size:.95rem}
+.fb.g{border-color:var(--ok)}.fb.b{border-color:var(--ko)}
+.prog{height:6px;background:var(--line);margin:.6rem 0 1rem}.prog div{height:100%;background:var(--ac);transition:width .3s}
+.gamegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line)}
+.gamegrid>button{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:1.3rem;text-align:left;display:flex;gap:1rem;align-items:flex-start}
+.gamegrid>button i{font-size:1.7rem;color:var(--ac-t);margin-top:.2rem}
+.gamegrid>button:hover{background:var(--panel2)}
+.gamegrid b{display:block;font-size:1.1rem}.gamegrid span{color:var(--mut);font-size:.9rem}
+.bar{height:8px;background:var(--line);margin:.6rem 0}.bar div{height:100%;background:var(--ac);width:100%}
+.pz{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ln{font-family:'JetBrains Mono',monospace;font-size:.88rem;border:1px solid var(--line);padding:.4rem .7rem;margin-bottom:.35rem;cursor:pointer;background:var(--bg);white-space:pre}
+.ln:hover{border-color:var(--ac)}
+.zone{border:1px dashed var(--line);padding:.6rem;min-height:120px}
+.bugline{display:block;width:100%;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.9rem;border:1px solid transparent;border-bottom:1px solid var(--line);white-space:pre;padding:.4rem .7rem}
+.bigq{font-family:'JetBrains Mono',monospace;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;letter-spacing:-.02em;margin:.6rem 0 1rem}
+/* teacher */
+#teacher{position:fixed;left:14px;bottom:14px;z-index:30;display:flex;gap:.6rem;align-items:flex-end;max-width:min(520px,calc(100vw - 28px))}
+#teacher svg{flex:none;width:84px;height:94px}
+#bubble{background:var(--tx);color:#0e0f12;padding:.7rem .9rem;font-size:.9rem;line-height:1.4;position:relative;max-height:130px;overflow:auto;font-weight:500}
+#bubble:before{content:"";position:absolute;left:-8px;bottom:18px;border:8px solid transparent;border-left:0;border-right-color:var(--tx)}
+#teacher .x{position:absolute;right:-6px;top:-10px;width:22px;height:22px;padding:0;font-size:.7rem;background:var(--bg)}
+.toast{position:fixed;right:14px;bottom:14px;background:var(--ac);color:#0e0f12;padding:.7rem 1rem;font-weight:700;z-index:40}
+.hidden{display:none!important}
+.fade{animation:in .3s ease both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:860px){
+ .hero,.layout,.row2,.pz,.gamegrid{grid-template-columns:1fr}
+ .side{position:static;max-height:260px}
+ .stats{grid-template-columns:1fr 1fr}.stats div{border-bottom:1px solid var(--line)}
+ .levels .row{grid-template-columns:60px 1fr}.levels .row button{grid-column:1/-1}
+ .opts{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}
+ .xp{margin-left:0;width:100%}
+ #bubble{font-size:.8rem;max-height:90px}#teacher svg{width:56px;height:64px}
+ body{padding-bottom:130px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><i class="fa-solid fa-terminal"></i> Profe Py</div>
+  <nav class="seg" id="nav"></nav>
+  <div class="seg" id="lvlseg" title="Tu nivel"></div>
+  <div class="xp"><span class="lbl" id="rank">Aprendiz</span><div class="xpbar"><div id="xpf" style="width:0"></div></div><span class="mono" id="xpn">0 XP</span></div>
+</header>
+<main id="view"></main>
+
+<div id="teacher">
+  <svg id="face" viewBox="0 0 84 94" aria-hidden="true">
+    <rect x="22" y="2" width="40" height="8" fill="#ff7a1a"/><rect x="38" y="10" width="8" height="8" fill="#ecebe6"/>
+    <rect x="8" y="18" width="68" height="56" fill="#ecebe6"/>
+    <rect x="16" y="28" width="22" height="18" fill="#0e0f12"/><rect x="46" y="28" width="22" height="18" fill="#0e0f12"/>
+    <rect x="22" y="34" width="8" height="8" fill="#ff7a1a" id="eyeL"/><rect x="52" y="34" width="8" height="8" fill="#ff7a1a" id="eyeR"/>
+    <rect x="38" y="35" width="8" height="4" fill="#0e0f12"/>
+    <path id="mouth" d="M28 58 Q42 68 56 58" stroke="#0e0f12" stroke-width="4" fill="none"/>
+    <rect x="18" y="76" width="48" height="16" fill="#ff7a1a"/><text x="42" y="89" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#0e0f12"></></text>
+  </svg>
+  <div id="bubble" aria-live="polite"></div>
+</div>
+
+<script>
+/* ===================== UTILIDADES ===================== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');
+const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const KW='def|return|if|elif|else|for|while|in|import|from|as|lambda|match|case|try|except|break|continue|and|or|not|with|True|False|None|is';
+const hlRe=new RegExp('(#.*$)|("[^"\\n]*"|\'[^\'\\n]*\')|\\b('+KW+')\\b|\\b(\\d+(?:\\.\\d+)?)\\b','gm');
+const hl=s=>esc(s).replace(hlRe,(m,c,st,k,n)=>c?`<span class="c">${c}</span>`:st?`<span class="s">${st}</span>`:k?`<span class="k">${k}</span>`:`<span class="nn">${n}</span>`);
+const code=s=>`<pre class="code">${hl(s)}</pre>`;
+const LV={b:'Básico',i:'Intermedio',p:'Profesional'};
+let S={xp:0,level:'b',tab:'inicio',done:{},best:{}};
+try{const x=JSON.parse(localStorage.getItem('profepy')||'null');if(x)S=Object.assign(S,x)}catch(e){}
+const save=()=>{try{localStorage.setItem('profepy',JSON.stringify(S))}catch(e){}};
+const RANKS=[[0,'Aprendiz'],[120,'Programador'],[350,'Pythonista'],[700,'Maestro del código'],[1200,'Gran Maestro']];
+function rankOf(x){let r=RANKS[0];for(const k of RANKS)if(x>=k[0])r=k;const nx=RANKS.find(k=>k[0]>x);return{name:r[1],pct:nx?(x-r[0])/(nx[0]-r[0])*100:100}}
+function addXP(n){S.xp+=n;save();paintXP();toast('+'+n+' XP')}
+function paintXP(){const r=rankOf(S.xp);$('#rank').textContent=r.name;$('#xpf').style.width=r.pct+'%';$('#xpn').textContent=S.xp+' XP'}
+function toast(t){const d=document.createElement('div');d.className='toast fade';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1600)}
+/* profesor */
+const MOUTH={happy:'M28 58 Q42 70 56 58',sad:'M28 64 Q42 54 56 64',think:'M30 62 L54 62',wow:'M34 58 Q42 72 50 58 Z'};
+let typeT;
+function say(msg,mood='happy'){
+  $('#mouth').setAttribute('d',MOUTH[mood]||MOUTH.happy);
+  $('#mouth').setAttribute('fill',mood==='wow'?'#0e0f12':'none');
+  const b=$('#bubble');clearTimeout(typeT);
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){b.textContent=msg;return}
+  let i=0;b.textContent='';(function t(){b.textContent=msg.slice(0,++i);if(i<msg.length)typeT=setTimeout(t,14)})();
+}
+const PRAISE=['¡Exacto!','¡Muy bien!','¡Eso es pensar como Python!','¡Correcto!','¡Así se hace!'];
+const OOPS=['Casi. Mira la explicación.','No pasa nada, así se aprende.','Fíjate bien en cada línea.','Python no perdona, pero tú aprendes rápido.'];
+
+/* ===================== LECCIONES ===================== */
+const LESSONS=[
+{id:1,l:'b',t:'Variables y tipos de datos',ic:'cube',w:'ident',
+ pts:['Un <b>dato</b> es información que maneja el programa. Tipos básicos: <b>int</b> (10, -15), <b>float</b> (7.2), <b>bool</b> (True/False) y <b>str</b> ("texto").',
+ 'Una <b>variable</b> es una caja con nombre. El signo <code>=</code> asigna <b>de derecha a izquierda</b>: primero se calcula la derecha, luego se guarda.',
+ 'Identificadores: no pueden empezar por número, no admiten signos de puntuación y no pueden ser palabras reservadas (<code>for</code>, <code>if</code>...).',
+ 'Asignación múltiple: <code>a, b, c = 1, "hola", True</code>. Y <code>print()</code> escribe, <code>input()</code> lee... pero siempre devuelve <b>texto</b>.'],
+ code:`num = 100             # int
+precio = 7.2          # float
+activo = True         # bool
+nombre = "Ana"        # str
+a, b, c = 1, "hola", True
+
+n = input("Número 1: ")   # escribes 3
+x = input("Número 2: ")   # escribes 4
+print(n + x)              # 34  (concatena textos)
+print(int(n) + int(x))    # 7   (suma números)
+print(f"El número es {num}")`,
+ why:'Python guarda cada dato con su tipo y el operador <code>+</code> se comporta según ese tipo: suma números pero une textos. Por eso <code>"3"+"4"</code> da <code>"34"</code>. Entender el tipo es entender qué hará cada operación.'},
+{id:2,l:'b',t:'Operadores',ic:'plus-minus',w:'ops',
+ pts:['<b>Aritméticos</b>: <code>+ - * / // % **</code>. <code>//</code> divide redondeando hacia abajo; <code>%</code> da el resto; <code>**</code> es potencia.',
+ '<b>Asignación</b>: <code>=</code> y los compuestos <code>+= -= *= /= %= //= **=</code>. <code>x += 5</code> equivale a <code>x = x + 5</code>.',
+ '<b>Relacionales</b> (<code>== != < > <= >=</code>) devuelven True o False. <b>Lógicos</b>: <code>and</code>, <code>or</code>, <code>not</code>.',
+ 'Otros: <code>in</code> (¿está dentro?), <code>is</code> (¿mismo objeto?) y el <b>ternario</b>: <code>"positivo" if a>0 else "negativo"</code>.'],
+ code:`print(5 // 2)    # 2
+print(5 % 2)     # 1
+print(2 ** 3)    # 8
+a = 5; b = 7
+print((a < b) and (b == 0))   # False
+print((a < b) or (b == 0))    # True
+print(not (a < b))            # False
+dato = "positivo" if a > 0 else "negativo"`,
+ why:'Los operadores relacionales convierten datos en decisiones (True/False) y los lógicos las combinan. Todo <code>if</code> y todo <code>while</code> se alimenta de estas expresiones. <code>and</code> exige que ambas sean True; <code>or</code> con que una lo sea basta.'},
+{id:3,l:'b',t:'Condicionales: if, elif, match',ic:'code-branch',w:'trace0',
+ pts:['<code>if condicion:</code> ejecuta su bloque si la condición es True; <code>else</code> es opcional.',
+ 'Se considera falso: <code>False</code>, <code>0</code>, <code>""</code> (texto vacío), listas vacías y <code>None</code>. Lo demás es verdadero.',
+ 'Con varias condiciones excluyentes: <code>if / elif / elif / else</code>. Se evalúan <b>en orden</b> y solo entra el primer bloque verdadero.',
+ '<code>match</code> (Python 3.10+) elige según un valor; <code>_</code> es el caso por defecto y <code>|</code> junta valores. Admite guardas con <code>if</code>.',
+ 'La <b>indentación</b> (tabulado) define qué pertenece a cada bloque.'],
+ code:`n = 5; a = 7
+if n > a:
+    print("El mayor es", n)
+else:
+    print("El mayor es", a)
+
+day = 4
+match day:
+    case 1 | 2 | 3 | 4 | 5:
+        print("Hoy es día de diario")
+    case 6 | 7:
+        print("Es fin de semana")
+    case _:
+        print("Día inválido")`,
+ why:'El <code>elif</code> se detiene en el primer True: si pones primero <code>nota >= 5</code>, un 9 nunca llegaría al bloque de "Sobresaliente". El orden de las condiciones es parte de la lógica.'},
+{id:4,l:'b',t:'Bucles: for, while, break, continue',ic:'rotate',w:'trace1',
+ pts:['<code>for var in conjunto:</code> recorre listas, tuplas, textos o <code>range()</code>. <code>range(1,10)</code> va del 1 al <b>9</b> (el último no entra).',
+ '<code>while condicion:</code> repite <b>mientras</b> la condición sea True. Si nunca cambia, el bucle es infinito.',
+ '<code>break</code> sale del bucle definitivamente. <code>continue</code> salta a la siguiente vuelta.',
+ 'Los bucles se pueden <b>anidar</b> y combinar con <code>if</code>: el bucle interno completo se ejecuta por cada vuelta del externo.'],
+ code:`suma = 0
+for n in range(1, 10):
+    suma = suma + n
+print(suma)            # 45
+
+for n in [2, 4, 5, 1, 9, 7]:
+    if n % 2 == 0:
+        print(n, "es par")
+    else:
+        print(n, "es impar")
+
+edad = int(input("Edad: "))
+while edad < 0:
+    print("Valor incorrecto")
+    edad = int(input("Edad: "))`,
+ why:'Usa <code>for</code> cuando sabes qué recorrer y <code>while</code> cuando no sabes cuántas vueltas harán falta (p. ej. pedir un dato hasta que sea válido). El simulador de abajo te deja ver cada vuelta paso a paso.'},
+{id:5,l:'i',t:'Listas',ic:'list-ol',w:'slice',
+ pts:['Conjunto ordenado entre corchetes: <code>[3, 9, 1, 7]</code>. Es <b>dinámica y mutable</b>: se puede añadir, quitar y cambiar.',
+ 'Cada elemento tiene una <b>posición (índice)</b>. La primera es <b>0</b>. También hay índices negativos: <code>-1</code> es el último.',
+ '<code>lista[1:4]</code> es una sublista: empieza en 1 y para <b>antes</b> del 4.',
+ 'Funciones: <code>len, max, min, del</code>. Métodos: <code>append(x)</code> al final, <code>insert(pos,x)</code> en una posición. <code>x in lista</code> comprueba si existe.',
+ 'Comprensión de listas: <code>[n**2 for n in datos if n%2==0]</code>. Desempaquetado: <code>a,b,c = lista</code>.'],
+ code:`lista = [3, 9, 1, 7, 11, 9]
+print(lista[3])        # 7      (posición 3)
+print(lista[-1])       # 9      (último)
+print(lista[1:4])      # [9, 1, 7]
+lista[5] = 15          # modifica
+datos = [6, 11]
+datos.append(5)        # [6, 11, 5]
+datos.insert(1, 4)     # [6, 4, 11, 5]
+print(7 in lista)      # True
+cuadrados = [n**2 for n in [3, 8, 1, 2]]   # [9, 64, 1, 4]`,
+ why:'<b>¿Por qué se empieza en 0?</b> El índice indica cuántos pasos hay desde el inicio: el primero está a 0 pasos. Localizar un dato en una lista es decir <i>"en qué posición está"</i>. Es ideal cuando el orden importa y se accede por posición o se recorre todo.'},
+{id:6,l:'i',t:'Tuplas y conjuntos',ic:'lock',w:null,
+ pts:['<b>Tupla</b>: como una lista pero <b>inmutable</b>, con paréntesis: <code>(4, 9, 3)</code>. Se accede y se recorre igual que una lista.',
+ 'Intentar <code>t[1] = 20</code> produce <b>TypeError</b>. Se convierten con <code>tuple(lista)</code> y <code>list(tupla)</code>.',
+ '<code>len</code>, <code>max</code> y <code>min</code> también funcionan en tuplas.',
+ '<b>Conjunto</b> (<code>{...}</code>): sin orden, sin posición y <b>sin duplicados</b>. Usa <code>add()</code> y <code>remove()</code>. No se puede localizar por índice.'],
+ code:`mitupla = (4, 9, 3)
+print(mitupla[0])      # 4
+for n in mitupla:
+    print(n)
+# mitupla[1] = 20      # TypeError
+
+lista = list(mitupla)  # ahora sí modificable
+mtup = tuple([3, 9, 1, 7, 11])
+print(len(mtup), max(mtup), min(mtup))   # 5 11 1
+
+myset = {"uno", "tres", "tres"}
+print(len(myset))      # 2  (sin duplicados)
+myset.add("cuatro")`,
+ why:'Se usa una tupla cuando los datos <b>no deben cambiar</b> (coordenadas, fecha, un registro). Protege contra errores y comunica intención. El conjunto es perfecto para eliminar duplicados o preguntar "¿está?" muy rápido, pero no para buscar por posición.'},
+{id:7,l:'i',t:'Diccionarios',ic:'book',w:null,
+ pts:['Parejas <code>clave:valor</code> entre llaves: <code>{"Madrid": 27.3, "Soria": 19.5}</code>. Las <b>claves son únicas</b>.',
+ 'Se accede <b>por clave, no por posición</b>: <code>ciudades["Madrid"]</code>. Si la clave no existe: <b>KeyError</b>.',
+ 'Asignar a una clave existente la modifica; a una nueva, la añade. <code>del d[clave]</code> la elimina.',
+ 'Recorrido: <code>keys()</code>, <code>values()</code>, <code>items()</code> (clave y valor a la vez). <code>update(otro)</code> fusiona, <code>clear()</code> vacía.'],
+ code:`ciudades = {"Madrid": 27.3, "Sevilla": 33.5, "Soria": 19.5}
+print(ciudades["Madrid"])        # 27.3
+ciudades["Sevilla"] = 31.7       # modifica
+ciudades["Salamanca"] = 22.4     # añade
+del ciudades["Soria"]            # elimina
+
+for k, v in ciudades.items():
+    print(k, v)
+
+dic1 = {"x25": "Monitor", "as40": "Disco"}
+dic1.update({"n10": "Impresora"})   # 3 elementos`,
+ why:'Con una lista dirías "la temperatura de la posición 2... ¿de quién era?". Con un diccionario preguntas directamente <b>"la de Soria"</b>. La clave da <i>significado</i> al dato, así que el código se lee solo y no depende del orden.'},
+{id:8,l:'i',t:'Combinar estructuras y localizar datos',ic:'diagram-project',w:'loc',
+ pts:['Las estructuras se anidan: <b>lista de diccionarios</b> (una tabla de registros), <b>diccionario de listas</b> (columnas), <b>listas de tuplas</b> (registros fijos)...',
+ '<b>Regla de oro:</b> lee de fuera hacia dentro. Cada corchete abre un nivel y su contenido depende del tipo de ese nivel: <b>número</b> si es lista/tupla, <b>clave</b> si es diccionario.',
+ 'JSON y los DataFrame de pandas son justo esto: listas de diccionarios y diccionarios de listas.',
+ 'Los errores típicos tienen causa clara: <b>IndexError</b> (posición que no existe), <b>KeyError</b> (clave que no existe), <b>TypeError</b> (usar texto en una lista o modificar una tupla).'],
+ code:`alumnos = [
+  {"nombre": "Ana",  "notas": [7, 9, 10]},
+  {"nombre": "Luis", "notas": [5, 6, 8]},
+]
+print(alumnos[1])                  # {'nombre': 'Luis', ...}
+print(alumnos[1]["nombre"])        # Luis
+print(alumnos[1]["notas"][2])      # 8
+
+tienda = {"frutas": ["pera", "uva"], "precios": (1.2, 2.5)}
+print(tienda["precios"][1])        # 2.5  (precio de la uva)
+
+for al in alumnos:
+    print(al["nombre"], sum(al["notas"]) / len(al["notas"]))`,
+ why:'Cada corchete es una pregunta: <i>"¿qué hay en el nivel actual?"</i>. <code>alumnos[1]</code> → "el 2º alumno" (un diccionario); <code>["notas"]</code> → "su lista de notas"; <code>[2]</code> → "la 3ª nota". Si te pierdes, imprime cada nivel con <code>print(type(x))</code>. Usa el laboratorio de abajo para practicarlo clic a clic.'},
+{id:9,l:'i',t:'Funciones, lambdas, map, filter, reduce',ic:'gears',w:null,
+ pts:['<code>def nombre(p1, p2):</code> crea una función; <code>return</code> devuelve el resultado. <b>Sin return devuelve None</b>.',
+ 'Argumentos por defecto: <code>def f(x, y=100)</code>. Número variable: <code>def f(*args)</code> (llegan como tupla, siempre al final).',
+ '<code>lambda n: n**2</code> es una función corta sin nombre ni return.',
+ '<b>map</b> transforma cada elemento, <b>filter</b> se queda con los que cumplen una condición, <b>reduce</b> combina todos en un solo valor.'],
+ code:`def media(a, b=10):
+    return (a + b) / 2
+print(media(4), media(4, 6))      # 7.0 5.0
+
+def total(*args):
+    return sum(args)
+print(total(2, 6, 8))             # 16
+
+numeros = [1, 2, 3, 4, 5]
+print(list(map(lambda x: x**2, numeros)))        # [1, 4, 9, 16, 25]
+print(list(filter(lambda x: x % 2 == 0, numeros)))# [2, 4]
+from functools import reduce
+print(reduce(lambda a, b: a + b, numeros))        # 15`,
+ why:'Una función evita repetir código y le pone nombre a una idea. <code>map/filter/reduce</code> son los tres verbos de los datos: <i>transformar, seleccionar, resumir</i>. Combinados con diccionarios (<code>sorted(lista, key=lambda p: p["edad"])</code>) resuelven en una línea lo que un bucle haría en seis.'},
+{id:10,l:'i',t:'Cadenas de caracteres',ic:'font',w:null,
+ pts:['<code>+</code> concatena y <code>*</code> repite. Una cadena se recorre con <code>for</code> y se accede por posición como una lista.',
+ 'Es <b>inmutable</b> (como una tupla): <code>cad[6] = "k"</code> da error.',
+ 'Métodos: <code>count, find</code> (devuelve -1 si no existe), <code>startswith, endswith, isalpha, isdigit, isalnum, split</code>. <code>len(texto)</code> da la longitud.',
+ '<code>split(",")</code> convierte un texto en una <b>lista</b>: es la puerta de entrada para tratar datos de texto.'],
+ code:`cad = "Esto es una cadena de estas"
+print(cad[3])               # 't'
+print(cad[:4])              # 'Esto'
+print("Hello" * 3)          # HelloHelloHello
+print(cad.find("una"))      # 8
+print(cad.count("a", 0, 13))# 1
+print(cad.endswith("na", 0, 11))   # True
+dias = "lunes,martes,jueves"
+print(dias.split(","))      # ['lunes', 'martes', 'jueves']`,
+ why:'Un texto es una secuencia de caracteres, igual que una lista es una secuencia de datos: por eso todo lo que sabes de índices y rebanadas <code>[a:b]</code> sirve aquí.'},
+{id:11,l:'p',t:'Ficheros, errores, CSV y JSON',ic:'file-lines',w:null,
+ pts:['<code>open(ruta, modo)</code>: <code>"r"</code> leer, <code>"w"</code> escribir <b>sobrescribiendo</b>, <code>"a"</code> añadir. Usa <code>encoding="UTF-8"</code> con tildes. <code>with open(...)</code> cierra solo.',
+ '<code>readline()</code> lee una línea (cadena vacía al final) y <code>readlines()</code> devuelve una lista con todas.',
+ '<code>try / except FileNotFoundError</code> captura el error y evita que el programa se caiga.',
+ '<b>CSV</b>: <code>csv.reader</code> da listas; <code>csv.DictReader</code> da diccionarios con la cabecera como claves. <b>JSON</b>: <code>json.load</code> (fichero), <code>json.loads</code> (texto), <code>json.dump</code> (guardar). Un objeto JSON es un diccionario; un array, una lista.'],
+ code:`import csv, json
+try:
+    with open("personas.csv", "r", encoding="UTF-8") as f:
+        for p in csv.DictReader(f):
+            print(p["nombre"])
+except FileNotFoundError:
+    print("El fichero no existe")
+
+cad = '[{"nombre":"Juan","edad":30},{"nombre":"Maria","edad":40}]'
+datos = json.loads(cad)          # lista de diccionarios
+for p in datos:
+    print(p["nombre"], "-", p["edad"])
+with open("fichero.json", "w") as f:
+    json.dump(datos, f)`,
+ why:'Los datos reales viven en ficheros y los ficheros fallan. JSON y CSV acaban convertidos en <b>listas de diccionarios</b>: dominar la localización de datos en esas estructuras es lo que te permite trabajar con cualquier API o fichero.',
+ nt:'Nota del profe: los métodos reales se escriben <code>readline()</code> y <code>readlines()</code>, <code>startswith()</code> y <code>endswith()</code> (todo en minúsculas).'},
+{id:12,l:'p',t:'Fechas con datetime',ic:'calendar-days',w:null,
+ pts:['<code>import datetime</code> da <code>date</code>, <code>time</code>, <code>datetime</code> y <code>timedelta</code>.',
+ '<code>date.today()</code>, <code>datetime.now()</code> y <code>date(2026, 11, 6)</code> crean fechas. Atributos: <code>year, month, day, hour, minute, second</code>.',
+ '<code>timedelta(days=10)</code> se suma o resta a una fecha; las fechas se comparan con <code>== < ></code>.',
+ '<code>strftime(formato)</code> fecha → texto; <code>strptime(texto, formato)</code> texto → fecha. Códigos: <code>%d %m %Y %H %M %S</code>.'],
+ code:`import datetime as dt
+f = dt.date(2026, 11, 6)
+print(f + dt.timedelta(days=30))        # 2026-12-06
+print(f.day, "/", f.month, "/", f.year) # 6 / 11 / 2026
+print(f.strftime("%d/%m/%Y"))           # 06/11/2026
+
+texto = "25/03/2003"
+fecha = dt.datetime.strptime(texto, "%d/%m/%Y")
+print(fecha.date())                     # 2003-03-25`,
+ why:'Nunca restes fechas como si fueran texto. Conviértelas a objetos con <code>strptime</code>, opera con ellas y presenta con <code>strftime</code>.',
+ nt:'Nota del profe: en Python 3 los números no llevan cero a la izquierda: se escribe <code>date(1995, 3, 20)</code>, no <code>03</code>.'},
+{id:13,l:'p',t:'Pandas: DataFrames',ic:'table',w:'df',
+ pts:['Un <b>DataFrame</b> es una tabla (filas y columnas). Se crea desde <b>lista de diccionarios</b>, <b>diccionario de listas</b>, <code>read_csv()</code> o <code>read_json()</code>.',
+ '<code>df.iloc[0]</code> accede a una fila por posición y <code>df.iloc[0]["ciudad"]</code> a un dato concreto. <code>df["edad"]</code> es una columna (Series).',
+ '<code>count, max, min, sum, mean</code> sobre una columna; <code>query("edad>35")</code> filtra; <code>sort_values(by=[...])</code> ordena; <code>groupby("col")</code> agrupa.',
+ '<code>map(func)</code> transforma una columna; <code>plot(kind="bar")</code> la dibuja. Instalación: <code>pip install pandas</code>.'],
+ code:`import pandas as pd
+datos = [{"empleado":"Juan","edad":35,"salario":1200,"departamento":"ventas"},
+         {"empleado":"Marcos","edad":39,"salario":1300,"departamento":"informática"}]
+df = pd.DataFrame(datos)
+print(df.iloc[0]["empleado"])                    # Juan
+print(df["edad"].mean())                         # 37.0
+print(df.query("edad > 35"))
+print(df.groupby("departamento")["salario"].mean())
+df["salario"] = df["salario"].map(lambda v: v * 1.10)`,
+ why:'Pandas es el mundo de listas de diccionarios y diccionarios de listas con superpoderes: en vez de un bucle con <code>if</code>, escribes una consulta. Prueba cada operación en el laboratorio de abajo.',
+ nt:'Nota del profe: en versiones recientes de pandas, <code>groupby(...).mean()</code> sobre columnas de texto falla; usa <code>.mean(numeric_only=True)</code> o selecciona la columna.'},
+{id:14,l:'p',t:'NumPy: arrays',ic:'cubes',w:'np',
+ pts:['<code>np.array()</code> crea arrays de <b>un único tipo</b> en 1, 2, 3... dimensiones: <code>[[8,2],[5,6]]</code>.',
+ 'Acceso con <code>cubo[1,2,1]</code> o <code>cubo[1][2][1]</code>; rangos con <code>vector[1:3]</code>.',
+ '<b>Filtrado con condición</b>: <code>tabla[tabla > 5]</code> devuelve un array 1D con los que cumplen.',
+ 'Operaciones: <code>add, subtract, multiply, divide</code>; estadística: <code>amax, amin, average, percentile</code>; <code>sort, extract, unique</code>; iterar con <code>nditer()</code>.'],
+ code:`import numpy as np
+tabla = np.array([[8, 2], [5, 6]])
+print(tabla[tabla > 5])            # [8 6]
+cubo = np.array([[[8,2],[5,5],[1,9]], [[-4,11],[18,1],[7,3]]])
+print(cubo[1, 2, 1])               # 3
+a1 = np.array([[3, 2, 7], [9, 4, 1]])
+print(np.sort(a1))                 # [[2 3 7] [1 4 9]]
+print(np.unique(np.array([[8,2,7],[9,7,2],[2,9,5]])))  # [2 5 7 8 9]`,
+ why:'Un array NumPy opera sobre <b>todos los elementos a la vez</b> (sin bucle) y mucho más rápido que una lista. La condición dentro de los corchetes es una "máscara" que decide qué elementos sobreviven.',
+ nt:'Nota del profe: la función se llama <code>np.nditer()</code> (en el material aparece como "diter" por error).'}
+];
+
+/* ===================== BANCO DE PREGUNTAS ===================== */
+// [módulo, nivel, enunciado, código, opciones|null, correcta(índice | [respuestas válidas]), explicación]
+const Q=[
+[1,'b','¿Qué muestra?','x = "3" + "4"\nprint(x)',['7','34','3 4','Error'],1,'El operador + entre textos los une (concatena): "3"+"4" es "34".'],
+[1,'b','El usuario escribe 20 en esta línea. ¿De qué tipo es n?','n = input("Edad: ")',['int','float','str','bool'],2,'input() siempre devuelve texto. Para operar hay que convertir con int() o float().'],
+[1,'b','¿Cuál es un identificador válido?',null,['1r','m.t','_n20','for'],2,'No puede empezar por número (1r), llevar puntuación (m.t) ni ser palabra reservada (for).'],
+[1,'b','¿Qué muestra?','a, b = 5, 7\na, b = b, a\nprint(a, b)',['5 7','7 5','7 7','Error'],1,'La asignación múltiple evalúa primero la derecha (7, 5) y luego asigna: se intercambian.'],
+[2,'b','¿Qué muestra?','print(7 // 2)',['3.5','3','4','1'],1,'// es división con redondeo inferior: 3.5 se queda en 3.'],
+[2,'b','¿Qué muestra?','print(17 % 5)',['3','2','3.4','12'],1,'% da el resto: 17 = 5·3 + 2.'],
+[2,'b','¿Qué muestra?','print(2 ** 3 + 1)',['7','9','8','16'],1,'** se calcula antes que +: 2**3 = 8 y 8+1 = 9.'],
+[2,'b','¿Qué vale x al final?','x = 10\nx += 5\nx *= 2\nprint(x)',['30','25','20','15'],0,'x = 10 → 15 → 30. Cada operador compuesto usa el valor actual.'],
+[2,'b','¿Qué muestra?','a = 5; b = 7\nprint((a < b) and (b == 0))',['True','False','0','Error'],1,'(a<b) es True pero (b==0) es False; and exige que ambas sean True.'],
+[2,'b','¿Qué muestra?','print(not (3 > 4) or 1 == 2)',['True','False','Error','None'],0,'3>4 es False, not lo convierte en True; True or lo que sea es True.'],
+[3,'b','¿Qué muestra?','n = 5; a = 7\nif n > a:\n    print("A")\nelse:\n    print("B")',['A','B','A B','Nada'],1,'5 > 7 es False, así que se ejecuta el else.'],
+[3,'b','¿Qué muestra?','nota = 6\nif nota >= 9:\n    print("Sob")\nelif nota >= 7:\n    print("Not")\nelif nota >= 5:\n    print("Apr")\nelse:\n    print("Sus")',['Sob','Not','Apr','Sus'],2,'Se evalúa en orden: 6>=9 no, 6>=7 no, 6>=5 sí. Entra ahí y se salta el resto.'],
+[3,'b','¿Qué muestra?','a = ""\nif a:\n    print("Hola")\nelse:\n    print("Vacío")',['Hola','Vacío','Error','Nada'],1,'Un texto vacío se interpreta como False.'],
+[3,'b','¿Qué vale data?','data = "pos" if -3 > 0 else "neg"\nprint(data)',['pos','neg','True','Error'],1,'El ternario elige según la condición: -3 > 0 es False, así que "neg".'],
+[3,'b','¿Qué muestra?','day = 4\nmatch day:\n    case 6:\n        print("Sábado")\n    case 7:\n        print("Domingo")\n    case _:\n        print("No finde")',['Sábado','Domingo','No finde','Error'],2,'4 no es 6 ni 7: entra el caso por defecto _.'],
+[4,'b','¿Qué muestra?','suma = 0\nfor n in range(1, 5):\n    suma += n\nprint(suma)',['15','10','4','5'],1,'range(1,5) produce 1,2,3,4 (el 5 no entra): 1+2+3+4 = 10.'],
+[4,'b','¿Qué muestra?','for i in range(3):\n    print(i, end=" ")',['1 2 3','0 1 2','0 1 2 3','1 2'],1,'range(3) empieza en 0 y llega hasta 2.'],
+[4,'b','¿Qué muestra?','x = 1\nwhile x < 20:\n    x = x * 2\nprint(x)',['16','20','32','40'],2,'x: 1,2,4,8,16 (16<20 sigue) → 32. Al ser 32 la condición es False y sale.'],
+[4,'b','¿Qué muestra?','for n in [1, 2, 3, 4, 5]:\n    if n == 3:\n        break\n    print(n, end=" ")',['1 2','1 2 3','1 2 4 5','1 2 3 4 5'],0,'break sale del bucle al llegar al 3, sin imprimirlo.'],
+[4,'b','¿Qué muestra?','for n in [1, 2, 3, 4, 5]:\n    if n == 3:\n        continue\n    print(n, end=" ")',['1 2','1 2 4 5','1 2 3 4 5','3'],1,'continue solo salta esta vuelta: el 3 no se imprime pero el bucle sigue.'],
+[4,'b','Escribe el valor que muestra:','c = 0\nfor i in range(5):\n    if i % 2 == 0:\n        c += 1\nprint(c)',null,['3'],'Cuentan i = 0, 2 y 4 (los pares de 0 a 4): 3.'],
+[4,'i','Escribe el valor que muestra:','cont = 0\nfor i in range(3):\n    for j in range(2):\n        cont += 1\nprint(cont)',null,['6'],'El bucle interno hace 2 vueltas por cada una de las 3 del externo: 3·2 = 6.'],
+[5,'i','¿Qué muestra?','lista = [3, 9, 1, 7, 11, 9]\nprint(lista[3])',['1','7','11','9'],1,'Los índices empiezan en 0: [0]=3, [1]=9, [2]=1, [3]=7.'],
+[5,'i','¿Qué muestra?','lista = [3, 9, 1, 7, 11, 9]\nprint(lista[1:4])',['[9, 1, 7, 11]','[9, 1, 7]','[3, 9, 1]','[1, 7, 11]'],1,'Desde la posición 1 hasta ANTES de la 4: posiciones 1, 2 y 3.'],
+[5,'i','¿Qué muestra?','lista = [3, 9, 1, 7, 11, 9]\nprint(lista[-2])',['9','11','7','Error'],1,'-1 es el último y -2 el penúltimo: 11.'],
+[5,'i','¿Qué muestra?','datos = [6, 11]\ndatos.append(5)\ndatos.insert(1, 4)\nprint(datos)',['[6, 4, 11, 5]','[6, 11, 5, 4]','[4, 6, 11, 5]','[6, 11, 4, 5]'],0,'append añade al final → [6,11,5]; insert(1,4) mete el 4 en la posición 1.'],
+[5,'i','¿Qué muestra?','print([n**2 for n in [1, 2, 3, 4, 5] if n % 2 == 0])',['[4, 16]','[1, 9, 25]','[2, 4]','[1, 4, 9, 16, 25]'],0,'Filtra los pares (2 y 4) y los eleva al cuadrado.'],
+[5,'i','¿Cuánto vale b?','l = [3, 9, 5]\na, b, c = l\nprint(b)',['3','9','5','Error'],1,'El desempaquetado asigna en orden: a=3, b=9, c=5.'],
+[5,'i','Escribe la salida (separada por un espacio):','lst = [4, 8, 15]\ndel lst[0]\nprint(len(lst), max(lst))',null,['2 15'],'Tras borrar el 4 quedan [8, 15]: len=2 y max=15.'],
+[5,'i','¿Qué muestra?','print(7 in [3, 9, 1, 7])',['True','False','3','Error'],0,'in comprueba si el dato está en la lista.'],
+[6,'i','¿Qué ocurre?','t = (4, 9, 3)\nt[1] = 20',['t pasa a (4, 20, 3)','TypeError: las tuplas no admiten asignación','IndexError','No pasa nada'],1,'Las tuplas son inmutables: no se pueden modificar sus elementos.'],
+[6,'i','¿Qué muestra?','t = tuple([3, 9, 1])\nprint(max(t), len(t))',['3 9','9 3','1 3','Error'],1,'max y len funcionan con tuplas: máximo 9, longitud 3.'],
+[6,'i','¿Qué muestra?','s = {"uno", "tres", "tres"}\nprint(len(s))',['3','2','1','Error'],1,'Los conjuntos no admiten duplicados: solo "uno" y "tres".'],
+[7,'i','¿Qué muestra?','c = {"Madrid": 27.3, "Soria": 19.5}\nprint(c["Madrid"])',['27.3','0','Madrid','KeyError'],0,'Se accede al valor mediante su clave.'],
+[7,'i','¿Qué hace esta línea sobre el diccionario c?','c["Salamanca"] = 22.4',['KeyError','Añade una pareja nueva','Sustituye a Madrid','Borra a Soria'],1,'Asignar a una clave nueva añade la pareja; si existiera, la modificaría.'],
+[7,'i','¿Qué ocurre?','c = {"Madrid": 27.3}\nprint(c["Toledo"])',['None','0','KeyError','""'],2,'Pedir una clave inexistente provoca KeyError.'],
+[7,'i','¿Qué muestra?','d = {"a": 1, "a": 2}\nprint(d)',["{'a': 1}","{'a': 2}","{'a': 1, 'a': 2}",'Error'],1,'Las claves son únicas: la última asignación gana.'],
+[7,'i','¿Qué muestra?','for k, v in {"x": 1, "y": 2}.items():\n    print(k, v, end=" · ")',['x 1 · y 2 ·','1 x · 2 y ·','x · y ·','1 · 2 ·'],0,'items() entrega cada pareja como (clave, valor).'],
+[7,'i','Escribe el valor que muestra:','d = {"x25": "Monitor"}\nd.update({"n10": "Impresora"})\nprint(len(d))',null,['2'],'update fusiona: el diccionario pasa a tener 2 parejas.'],
+[8,'i','¿Qué muestra?','alumnos = [{"n": "Ana", "notas": [7, 9]},\n           {"n": "Luis", "notas": [5, 6]}]\nprint(alumnos[1]["notas"][0])',['7','5','6','Luis'],1,'alumnos[1] es Luis (2º elemento), ["notas"] su lista y [0] la primera nota: 5.'],
+[8,'i','¿Qué muestra?','d = {"frutas": ["pera", "uva"], "precio": (2, 3)}\nprint(d["precio"][1])',['2','3','uva','Error'],1,'d["precio"] es la tupla (2, 3); su posición 1 es 3.'],
+[8,'i','¿Qué muestra?','p = [("Ana", 20), ("Luis", 30)]\nfor nombre, edad in p:\n    if edad > 25:\n        print(nombre)',['Ana','Luis','Ana Luis','Nada'],1,'Cada tupla se desempaqueta en nombre y edad; solo Luis supera 25.'],
+[8,'i','Escribe el valor que muestra:','datos = {"a": [1, 2, 3], "b": [4, 5]}\ntotal = 0\nfor k in datos:\n    total += len(datos[k])\nprint(total)',null,['5'],'Recorre las claves "a" y "b": 3 + 2 = 5 elementos.'],
+[8,'i','¿Qué error da?','lista = [10, 20, 30]\nprint(lista["a"])',['KeyError','IndexError','TypeError','Ninguno'],2,'Una lista solo admite números (o rebanadas) entre corchetes, no texto: TypeError.'],
+[9,'i','¿Qué muestra?','def f(x, y=100):\n    print(x, ":", y)\nf(30)',['30 : 100','30 : 30','100 : 30','Error'],0,'Al no pasar y, toma su valor por defecto: 100.'],
+[9,'i','¿Qué muestra?','def f(*args):\n    print(len(args))\nf(2, 6, 9)',['1','2','3','Error'],2,'*args recoge todos los argumentos en una tupla de 3 elementos.'],
+[9,'i','¿Qué muestra?','cuadrado = lambda n: n ** 2\nprint(cuadrado(4))',['8','16','24','Error'],1,'La lambda eleva su argumento al cuadrado.'],
+[9,'i','¿Qué muestra?','print(list(map(lambda x: x * 2, [1, 2, 3])))',['[2, 4, 6]','[1, 2, 3]','[1, 4, 9]','[6]'],0,'map aplica la función a cada elemento.'],
+[9,'i','¿Qué muestra?','print(list(filter(lambda x: x % 2 == 0, [1, 2, 3, 4, 5])))',['[1, 3, 5]','[2, 4]','[True, False]','[2, 4, 6]'],1,'filter conserva solo los elementos para los que la función devuelve True.'],
+[9,'i','¿Qué muestra?','from functools import reduce\nprint(reduce(lambda a, b: a + b, [1, 2, 3, 4, 5]))',['5','10','15','[1,2,3,4,5]'],2,'reduce acumula de dos en dos: 1+2=3, 3+3=6, 6+4=10, 10+5=15.'],
+[9,'i','¿Qué muestra?','def suma(a, b):\n    a + b\nr = suma(2, 3)\nprint(r)',['5','None','0','Error'],1,'Sin return la función devuelve None, aunque calcule algo.'],
+[10,'i','¿Qué muestra?','cad = "Mi texto"\nprint(cad[3])',["'t'","'e'","'x'",'Error'],0,'M(0) i(1) espacio(2) t(3).'],
+[10,'i','¿Qué muestra?','cad = "Mi texto"\nprint(cad[:5])',["'Mi te'","'Mi tex'","'i tex'","'Mi t'"],0,'[:5] toma desde el inicio hasta antes de la posición 5.'],
+[10,'i','¿Qué muestra?','print("Hello" * 3)',['Hello3','HelloHelloHello','Hello Hello Hello','Error'],1,'* repite el texto.'],
+[10,'i','¿Qué muestra?','print("Esto es una cadena".find("una"))',['8','9','-1','7'],0,'"una" empieza en la posición 8 (E0 s1 t2 o3 espacio4 e5 s6 espacio7 u8).'],
+[10,'i','¿Qué muestra?','print("lunes,martes".split(","))',["['lunes', 'martes']","['lunes,martes']","('lunes', 'martes')",'lunes martes'],0,'split devuelve una lista con los trozos entre comas.'],
+[11,'p','¿Qué hace open("a.txt", "w") si el fichero ya existe?',null,['Añade al final','Sobrescribe su contenido','Da error','Solo lo lee'],1,'El modo "w" borra y escribe de nuevo; para conservar usa "a".'],
+[11,'p','¿Qué muestra si "fichero.txt" no existe?','try:\n    r = open("fichero.txt", "r")\nexcept FileNotFoundError:\n    print("No existe")',['Error y se detiene','No existe','Crea el fichero','Nada'],1,'La excepción es capturada por el bloque except.'],
+[11,'p','json.load(f) sobre un fichero con un array de objetos devuelve...',null,['Un texto','Una tupla','Una lista de diccionarios','Un DataFrame'],2,'Array JSON → lista; objeto JSON → diccionario.'],
+[11,'p','csv.DictReader devuelve cada fila como...',null,['Lista','Tupla','Diccionario con la cabecera como claves','Texto'],2,'La primera fila se usa como claves del diccionario.'],
+[11,'p','Escribe el valor que muestra:','import json\ncad = \'{"nombre":"Juan","edad":30}\'\nd = json.loads(cad)\nprint(d["edad"] + 1)',null,['31'],'loads convierte el texto en diccionario; d["edad"] es 30.'],
+[12,'p','¿Qué fecha muestra?','import datetime as dt\nprint(dt.date(2026, 11, 6) + dt.timedelta(days=30))',['2026-12-06','2026-12-05','2026-11-30','2027-01-06'],0,'Noviembre tiene 30 días: 6 de noviembre + 30 días = 6 de diciembre.'],
+[12,'p','¿Qué muestra strftime("%d/%m/%Y") para el 10 de noviembre de 2020?',null,['2020/11/10','10/11/2020','11/10/2020','10-11-20'],1,'%d día, %m mes, %Y año largo, en ese orden.'],
+[12,'p','strptime(texto, formato) devuelve...',null,['Un texto','Un objeto datetime','Un entero','Una lista'],1,'strptime convierte (parsea) texto en objeto fecha.'],
+[13,'p','Con df = tabla de ciudades (0: Málaga 24, 1: Ávila 17...), ¿qué da df.iloc[0]["ciudad"]?',null,['Ávila','Málaga','24','0'],1,'iloc[0] es la primera fila y ["ciudad"] elige ese dato.'],
+[13,'p','df.groupby("departamento")["salario"].mean() devuelve...',null,['Un DataFrame','Una Series con departamento como índice','Un diccionario','Un número'],1,'Al elegir una columna tras groupby, el resultado es una Series.'],
+[13,'p','Con edades Juan 30, Maria 40, Elena 35 y Jose 38, df.query("edad>35") devuelve...',null,['Juan y Elena','Maria y Jose','Solo Maria','Todos'],1,'Solo 40 y 38 son mayores que 35 (35 no es mayor que 35).'],
+[13,'p','Escribe el valor (con decimales si los tiene):','edades = [20, 45, 30, 32]\ndf["edad"].mean()',null,['31.75'],'(20+45+30+32)/4 = 127/4 = 31.75.'],
+[14,'p','¿Qué muestra?','tabla = np.array([[8, 2], [5, 6]])\nprint(tabla[tabla > 5])',['[8 6]','[[8 6]]','[5 6]','[8 2]'],0,'Filtra los mayores que 5 y los devuelve como array de 1 dimensión.'],
+[14,'p','¿Qué da cubo[1, 2, 1]?','cubo = np.array([[[8,2],[5,5],[1,9]],\n                 [[-4,11],[18,1],[7,3]]])',['9','3','7','11'],1,'cubo[1] = segundo bloque; [2] = su tercera fila [7,3]; [1] = 3.'],
+[14,'p','¿Qué devuelve np.unique(...)?','np.unique(np.array([[8,2,7],[9,7,2],[2,9,5]]))',['[2 5 7 8 9]','[8 2 7 9 5]','[[2 5 7] [8 9 9]]','9'],0,'Elimina duplicados y devuelve un array 1D ordenado.'],
+[8,'p','¿Qué muestra?','data = {"equipos": [{"n": "A", "pts": [3, 1, 3]},\n                    {"n": "B", "pts": [0, 3, 3]}]}\nprint(sum(data["equipos"][1]["pts"]))',['7','6','9','3'],1,'data["equipos"][1] es B; su lista de pts suma 0+3+3 = 6.'],
+[8,'p','Escribe el valor que muestra:','reg = [("Ana", {"n": [8, 6]}), ("Luis", {"n": [4, 9]})]\nprint(reg[1][1]["n"][1])',null,['9'],'reg[1] → tupla de Luis; [1] → su diccionario; ["n"] → lista; [1] → 9.'],
+[8,'p','¿Qué muestra?','m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nprint([fila[1] for fila in m])',['[2, 5, 8]','[4, 5, 6]','[1, 2, 3]','[1, 5, 9]'],0,'Toma el elemento de posición 1 de cada fila (una columna).'],
+[9,'p','¿Qué muestra?','p = [{"nombre": "Juan", "edad": 30}, {"nombre": "Maria", "edad": 40}, {"nombre": "Elena", "edad": 35}]\nprint(sorted(p, key=lambda x: x["edad"])[0]["nombre"])',['Juan','Maria','Elena','30'],0,'Ordena por edad (30, 35, 40); el primero es Juan.'],
+[9,'p','¿Qué muestra?','nums = [1, 2, 3, 4, 5, 6]\nprint(sum(map(lambda x: x*x, filter(lambda x: x % 2 == 0, nums))))',['56','91','12','20'],0,'filter deja 2, 4, 6; map los eleva: 4, 16, 36; sum = 56.'],
+[6,'p','¿Qué muestra? (cuidado)','a = [1, 2]\nb = a\nb.append(3)\nprint(a)',['[1, 2]','[1, 2, 3]','[3]','Error'],1,'b = a NO copia: ambas variables apuntan a la misma lista. Para copiar usa a.copy() o a[:].'],
+[6,'p','¿Qué muestra? (cuidado)','t = ([1, 2], 3)\nt[0].append(9)\nprint(t)',['([1, 2], 3)','([1, 2, 9], 3)','TypeError','([9], 3)'],1,'La tupla es inmutable, pero contiene una lista mutable: la lista sí puede cambiar por dentro.'],
+[2,'p','¿Qué muestra?','x = [1, 2]\ny = [1, 2]\nprint(x == y, x is y)',['True True','True False','False False','False True'],1,'== compara el contenido (iguales) e is compara si son el mismo objeto (no lo son).']
+];
+
+/* ===================== MOTOR QUIZ ===================== */
+let QZ=null;
+function startQuiz(filter,n,title,back){
+  const pool=shuffle(Q.filter(filter)).slice(0,n);
+  if(!pool.length){say('Aún no hay preguntas para eso.','think');return}
+  QZ={pool,i:0,ok:0,title,back,done:false,ans:false};
+  drawQuiz();
+}
+function drawQuiz(){
+  const el=$('#qzbox');if(!el)return;
+  if(!QZ){el.innerHTML='';return}
+  if(QZ.i>=QZ.pool.length){
+    const p=Math.round(QZ.ok/QZ.pool.length*100);
+    const xp=QZ.ok*10+(p===100?30:0);
+    if(!QZ.done){QZ.done=true;addXP(xp);const k=QZ.title;S.best[k]=Math.max(S.best[k]||0,p);save()}
+    say(p===100?'¡Perfecto! Eso es dominar el código.':p>=60?'Buen resultado. Repasa lo que fallaste.':'Hay que repasar, pero ya sabes dónde mirar.',p>=60?'wow':'think');
+    el.innerHTML=`<div class="q fade"><span class="lbl">${esc(QZ.title)}</span><h2 style="margin-top:.4rem">${QZ.ok} / ${QZ.pool.length} correctas (${p}%)</h2><p>Has ganado ${xp} XP. ${p===100?'Bonus de 30 XP por no fallar ninguna.':''}</p><div style="display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap"><button class="btn" onclick="drawQuiz2()">Repetir</button><button onclick="QZ=null;drawQuiz()">Cerrar</button></div></div>`;
+    return;
+  }
+  const q=QZ.pool[QZ.i],typed=!q[4];
+  el.innerHTML=`<div class="q fade"><span class="lbl">${esc(QZ.title)} · pregunta ${QZ.i+1}/${QZ.pool.length} · ${LV[q[1]]}</span>
+  <div class="prog"><div style="width:${QZ.i/QZ.pool.length*100}%"></div></div>
+  <div class="qt">${esc(q[2])}</div>${q[3]?code(q[3]):''}
+  ${typed?`<div style="display:flex;gap:.5rem;margin-top:.6rem"><input type="text" id="qin" placeholder="Tu respuesta..." autocomplete="off"><button class="btn" id="qgo">Comprobar</button></div>`:
+  `<div class="opts">${q[4].map((o,k)=>`<button data-k="${k}">${esc(o)}</button>`).join('')}</div>`}
+  <div id="qfb"></div></div>`;
+  if(typed){const go=()=>answerQ($('#qin').value);$('#qgo').onclick=go;$('#qin').onkeydown=e=>{if(e.key==='Enter')go()};$('#qin').focus()}
+  else $$('.opts button',el).forEach(b=>b.onclick=()=>answerQ(+b.dataset.k));
+  QZ.ans=false;
+}
+function drawQuiz2(){const f=QZ.f;startQuiz(QZ.filter,QZ.pool.length,QZ.title)}
+function answerQ(v){
+  if(QZ.ans)return;const q=QZ.pool[QZ.i],typed=!q[4];let ok;
+  if(typed){if(!String(v).trim())return;ok=q[5].some(a=>a.replace(/\s+/g,' ')===String(v).trim().replace(/\s+/g,' '))}
+  else ok=v===q[5];
+  QZ.ans=true;if(ok)QZ.ok++;
+  if(!typed)$$('#qzbox .opts button').forEach((b,k)=>{b.disabled=true;if(k===q[5])b.classList.add('good');else if(k===v)b.classList.add('bad')});
+  else $('#qin').disabled=true;
+  say(ok?pick(PRAISE):pick(OOPS),ok?'happy':'sad');
+  $('#qfb').innerHTML=`<div class="fb ${ok?'g':'b'}"><b>${ok?'Correcto.':'No exactamente.'}</b> ${typed&&!ok?'Respuesta: <code>'+esc(q[5][0])+'</code>. ':''}${esc(q[6])}</div><button class="btn" style="margin-top:.8rem" id="qnext">${QZ.i+1<QZ.pool.length?'Siguiente':'Ver resultado'} <i class="fa-solid fa-arrow-right"></i></button>`;
+  $('#qnext').onclick=()=>{QZ.i++;drawQuiz()};$('#qnext').focus();
+}
+startQuiz.prototype=null;
+// guarda el filtro para poder repetir
+const _sq=startQuiz;startQuiz=function(f,n,t,b){_sq(f,n,t,b);if(QZ)QZ.filter=f};
+
+/* ===================== WIDGETS ===================== */
+const W={};
+/* --- identificadores --- */
+const RESERVED='False None True and as assert break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' ');
+W.ident=el=>{
+  el.innerHTML=`<div class="row2"><div><label class="lbl">Nombre de variable</label><input type="text" id="wi1" value="_n20"></div><div><label class="lbl">Valor</label><input type="text" id="wi2" value="100"></div></div><div id="wio" style="margin-top:1rem"></div>`;
+  const run=()=>{
+    const n=$('#wi1').value.trim(),v=$('#wi2').value.trim();let nm,nt=true;
+    if(!n){nm='Escribe un nombre.';nt=false}
+    else if(/^\d/.test(n)){nm='No válido: no puede empezar por número.';nt=false}
+    else if(!/^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ]+$/.test(n)){nm='No válido: contiene signos de puntuación o espacios.';nt=false}
+    else if(RESERVED.includes(n)){nm='No válido: es una palabra reservada de Python.';nt=false}
+    else nm='Válido.';
+    let ty,val=v;
+    if(/^-?\d+$/.test(v))ty='int';else if(/^-?\d*\.\d+$/.test(v))ty='float';else if(v==='True'||v==='False')ty='bool';
+    else if(/^("[^"]*"|'[^']*')$/.test(v)){ty='str';val=v.slice(1,-1)}else ty=null;
+    $('#wio').innerHTML=`<p class="${nt?'ac':''}"><i class="fa-solid fa-${nt?'check':'xmark'}"></i> Identificador: ${nm}</p>`+
+    (ty?`<p><i class="fa-solid fa-check"></i> Tipo detectado: <b class="mono">${ty}</b></p><div style="margin:.8rem 0"><div class="vbox ${nt?'ch':''}"><span>${esc(n||'?')}</span><b>${esc(val)}</b></div> <span class="mono">${esc(n)} = ${esc(v)}</span></div>`:
+    `<p><i class="fa-solid fa-xmark"></i> <span class="mono">${esc(v||'(vacío)')}</span> no es un literal válido: los textos van entre comillas ("hola"); sin comillas Python buscaría una variable con ese nombre (NameError).</p>`);
+  };
+  $$('input',el).forEach(i=>i.oninput=run);run();
+};
+/* --- operadores --- */
+W.ops=el=>{
+  el.innerHTML=`<div class="row2"><div><label class="lbl">x</label><input type="number" id="ox" value="17"></div><div><label class="lbl">y</label><input type="number" id="oy" value="5"></div></div><div class="row2" style="margin-top:1rem"><div><table id="oa"></table></div><div><table id="orr"></table></div></div>`;
+  const run=()=>{
+    const x=parseInt($('#ox').value)||0,y=parseInt($('#oy').value)||0;
+    const fl=r=>Number.isInteger(r)?r+'.0':String(r);
+    const ar=[['x + y',x+y],['x - y',x-y],['x * y',x*y],['x / y',y?fl(x/y):'ZeroDivisionError'],['x // y',y?Math.floor(x/y):'ZeroDivisionError'],['x % y',y?((x%y)+y)%y:'ZeroDivisionError'],['x ** y',y>=0?Math.pow(x,y):fl(Math.pow(x,y))]];
+    const re=[['x == y',x==y],['x != y',x!=y],['x < y',x<y],['x > y',x>y],['x <= y',x<=y],['x >= y',x>=y],['(x > y) and (y > 0)',x>y&&y>0],['(x > y) or (y > 20)',x>y||y>20],['not (x > y)',!(x>y)]];
+    const P=v=>typeof v==='boolean'?(v?'True':'False'):v;
+    $('#oa').innerHTML='<tr><th>Aritméticos</th><th>Resultado</th></tr>'+ar.map(r=>`<tr><td>${r[0]}</td><td>${P(r[1])}</td></tr>`).join('');
+    $('#orr').innerHTML='<tr><th>Relacionales y lógicos</th><th>Resultado</th></tr>'+re.map(r=>`<tr><td>${r[0]}</td><td>${P(r[1])}</td></tr>`).join('');
+  };
+  $$('input',el).forEach(i=>i.oninput=run);run();
+};
+/* --- trazador --- */
+const PROGS={
+ trace0:[{n:'if / elif / else',par:{id:'nota',label:'nota',min:0,max:10,val:6},
+  lines:p=>['nota = '+p,'if nota >= 9:','    print("Sobresaliente")','elif nota >= 7:','    print("Notable")','elif nota >= 5:','    print("Aprobado")','else:','    print("Suspenso")'],
+  gen:p=>{const o=[],S=[],a=(l,n)=>S.push({l,v:{nota:p},o:[...o],n});
+   a(1,`Se crea la variable nota con el valor ${p}.`);let hit=false;
+   for(const [l,t,txt,pl] of [[2,9,'Sobresaliente',3],[4,7,'Notable',5],[6,5,'Aprobado',7]]){
+    a(l,`¿${p} >= ${t}? Resultado: ${p>=t?'True':'False'}.`);
+    if(p>=t){o.push(txt);a(pl,`Entra en este bloque e imprime "${txt}". El resto de elif/else se SALTA.`);hit=true;break}}
+   if(!hit){a(8,'Ninguna condición fue True: se ejecuta el else.');o.push('Suspenso');a(9,'Imprime "Suspenso".')}
+   return S}}],
+ trace1:[
+ {n:'for con acumulador',par:{id:'fin',label:'fin del range',min:2,max:9,val:6},
+  lines:p=>['suma = 0',`for n in range(1, ${p}):`,'    suma = suma + n','print(suma)'],
+  gen:p=>{const o=[],S=[],a=(l,v,n)=>S.push({l,v:{...v},o:[...o],n});let s=0;
+   a(1,{suma:0},'Se inicializa el acumulador en 0.');
+   for(let n=1;n<p;n++){a(2,{suma:s,n},`El for da a n el valor ${n}.`);s+=n;a(3,{suma:s,n},`suma = ${s-n} + ${n} = ${s}.`)}
+   a(2,{suma:s,n:p-1},`range(1, ${p}) se agota (llega hasta ${p-1}): el bucle termina.`);o.push(s);a(4,{suma:s,n:p-1},`print muestra ${s}.`);return S}},
+ {n:'while',par:{id:'x0',label:'x inicial',min:1,max:19,val:1},
+  lines:p=>['x = '+p,'while x < 20:','    x = x * 2','print(x)'],
+  gen:p=>{const o=[],S=[],a=(l,x,n)=>S.push({l,v:{x},o:[...o],n});let x=p;
+   a(1,x,`x vale ${x}.`);
+   while(x<20){a(2,x,`¿${x} < 20? True: se entra en el bucle.`);x*=2;a(3,x,`x = x * 2 = ${x}.`)}
+   a(2,x,`¿${x} < 20? False: el bucle termina.`);o.push(x);a(4,x,`print muestra ${x}.`);return S}},
+ {n:'for + if (pares/impares)',par:null,
+  lines:()=>['lista = [2, 4, 5, 1, 9, 7]','for n in lista:','    if n % 2 == 0:','        print(n, "es par")','    else:','        print(n, "es impar")'],
+  gen:()=>{const L=[2,4,5,1,9,7],ls='[2, 4, 5, 1, 9, 7]',o=[],S=[],a=(l,n,t)=>S.push({l,v:n===null?{lista:ls}:{lista:ls,n},o:[...o],n:t});
+   a(1,null,'Se crea la lista con 6 números.');
+   for(const n of L){a(2,n,`n toma el siguiente valor de la lista: ${n}.`);a(3,n,`${n} % 2 = ${n%2}. ¿Es 0? ${n%2===0?'True':'False'}.`);
+    if(n%2===0){o.push(n+' es par');a(4,n,'Rama if: imprime que es par.')}else{o.push(n+' es impar');a(6,n,'Rama else: imprime que es impar.')}}
+   a(2,7,'No quedan elementos: fin del bucle.');return S}},
+ {n:'bucles anidados',par:null,
+  lines:()=>['for i in range(1, 4):','    for j in range(1, 3):','        print(i, "x", j, "=", i*j)'],
+  gen:()=>{const o=[],S=[],a=(l,v,n)=>S.push({l,v:{...v},o:[...o],n});
+   for(let i=1;i<4;i++){a(1,{i},`Bucle externo: i = ${i}.`);
+    for(let j=1;j<3;j++){a(2,{i,j},`Bucle interno: j = ${j}.`);o.push(`${i} x ${j} = ${i*j}`);a(3,{i,j},`Imprime ${i} x ${j} = ${i*j}.`)}
+    a(2,{i,j:2},'El interno se agota y se vuelve al externo.')}
+   a(1,{i:3,j:2},'El externo se agota. Total: 3 x 2 = 6 impresiones.');return S}}]
+};
+PROGS.trace0=PROGS.trace0;
+W.trace0=el=>traceUI(el,'trace0');W.trace1=el=>traceUI(el,'trace1');
+function traceUI(el,key){
+  const progs=PROGS[key];let pi=0,par=progs[0].par?progs[0].par.val:null,st=0,steps=[],tm=null;
+  const build=()=>{const P=progs[pi];steps=P.gen(par);st=0;stop();draw()};
+  const stop=()=>{clearInterval(tm);tm=null;const b=$('#tpl',el);if(b)b.innerHTML='<i class="fa-solid fa-play"></i> Auto'};
+  const draw=()=>{
+    const P=progs[pi],s=steps[st],prev=st?steps[st-1].v:{},lines=P.lines(par);
+    el.innerHTML=`${progs.length>1?`<div class="seg" style="margin-bottom:1rem">${progs.map((p,k)=>`<button data-p="${k}" class="${k===pi?'on':''}">${p.n}</button>`).join('')}</div>`:''}
+    ${P.par?`<div style="margin-bottom:1rem"><label class="lbl">${P.par.label}: <b class="ac mono">${par}</b></label><input type="range" id="trs" min="${P.par.min}" max="${P.par.max}" value="${par}" style="width:100%;accent-color:#ff7a1a"></div>`:''}
+    <div class="row2"><div class="tracecode">${lines.map((t,k)=>`<div class="${k+1===s.l?'cur':''}"><i>${k+1}</i>${hl(t)}</div>`).join('')}</div>
+    <div><span class="lbl">Variables (paso ${st+1}/${steps.length})</span><div style="margin:.5rem 0;min-height:60px">${Object.entries(s.v).map(([k,v])=>`<div class="vbox ${prev[k]!==v?'ch':''}"><span>${k}</span><b>${esc(v)}</b></div>`).join('')}</div>
+    <span class="lbl">Pantalla</span><div class="out">${s.o.map(esc).join('\n')||' '}</div></div></div>
+    <div class="fb" style="margin:1rem 0"><i class="fa-solid fa-chalkboard-user ac"></i> ${esc(s.n)}</div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap"><button id="tpv" ${st?'':'disabled'}><i class="fa-solid fa-backward-step"></i> Atrás</button><button class="btn" id="tnx" ${st<steps.length-1?'':'disabled'}>Siguiente <i class="fa-solid fa-forward-step"></i></button><button id="tpl"><i class="fa-solid fa-play"></i> Auto</button><button id="trs0"><i class="fa-solid fa-rotate-left"></i> Reiniciar</button></div>`;
+    $$('[data-p]',el).forEach(b=>b.onclick=()=>{pi=+b.dataset.p;par=progs[pi].par?progs[pi].par.val:null;build()});
+    const r=$('#trs',el);if(r)r.oninput=()=>{par=+r.value;build()};
+    $('#tpv',el).onclick=()=>{stop();st--;draw()};$('#tnx',el).onclick=()=>{stop();st++;draw()};
+    $('#trs0',el).onclick=()=>{st=0;stop();draw()};
+    $('#tpl',el).onclick=()=>{if(tm){stop();return}$('#tpl',el).innerHTML='<i class="fa-solid fa-pause"></i> Pausa';tm=setInterval(()=>{if(st<steps.length-1){st++;draw();const b=$('#tpl',el);if(b){b.innerHTML='<i class="fa-solid fa-pause"></i> Pausa'}}else{stop()}},900)};
+    if(tm){$('#tpl',el).innerHTML='<i class="fa-solid fa-pause"></i> Pausa'}
+  };
+  build();
+}
+/* --- rebanadas --- */
+function sliceIdx(n,a,b,s){
+  if(s===0)return null;let out=[],i;
+  if(s>0){a=a===null?0:a<0?Math.max(a+n,0):Math.min(a,n);b=b===null?n:b<0?Math.max(b+n,0):Math.min(b,n);for(i=a;i<b;i+=s)out.push(i)}
+  else{a=a===null?n-1:a<0?Math.max(a+n,-1):Math.min(a,n-1);b=b===null?-1:b<0?Math.max(b+n,-1):Math.min(b,n-1);for(i=a;i>b;i+=s)out.push(i)}
+  return out;
+}
+W.slice=el=>{
+  const L=[3,9,1,7,11,9];
+  el.innerHTML=`<p class="mono" style="margin-bottom:.6rem">lista = [3, 9, 1, 7, 11, 9]</p><div class="cells" id="sc"></div>
+  <div style="display:flex;gap:.5rem;align-items:center;margin:1rem 0;flex-wrap:wrap"><span class="mono">lista[</span><input type="text" id="si" value="1:4" style="width:130px" class="mono"><span class="mono">]</span></div>
+  <div class="seg" id="sq" style="margin-bottom:1rem"></div><div class="out" id="so"></div><div class="fb" id="sw"></div>`;
+  const ex=['3','-1','1:4',':3','2:','::2','::-1','-3:'];
+  $('#sq').innerHTML=ex.map(e=>`<button>${e}</button>`).join('');
+  $$('#sq button').forEach(b=>b.onclick=()=>{$('#si').value=b.textContent;run()});
+  const run=()=>{
+    const t=$('#si').value.trim();let sel=[],msg='',res='';
+    const num=x=>x===''?null:/^-?\d+$/.test(x)?+x:NaN;
+    if(t.includes(':')){
+      const p=t.split(':');const a=num(p[0].trim()),b=num((p[1]||'').trim()),s=p.length>2?num(p[2].trim()):null;
+      if(p.length>3||[a,b,s].some(Number.isNaN)){res='<span class="e">SyntaxError / TypeError: los índices deben ser enteros</span>'}
+      else{const st=s===null?1:s;const ix=sliceIdx(6,a,b,st);if(!ix)res='<span class="e">ValueError: slice step cannot be zero</span>';else{sel=ix;res='['+ix.map(i=>L[i]).join(', ')+']';
+       msg=`Empieza en ${a===null?(st>0?'el principio (0)':'el final'):a}, para ANTES de ${b===null?(st>0?'el final':'el principio'):b} y avanza de ${st} en ${st}${st<0?' (hacia atrás)':''}.`}}
+    }else{
+      const a=num(t);
+      if(Number.isNaN(a)||a===null)res='<span class="e">TypeError: list indices must be integers or slices</span>';
+      else if(a>=6||a<-6)res='<span class="e">IndexError: list index out of range</span>';
+      else{const i=a<0?a+6:a;sel=[i];res=String(L[i]);msg=a<0?`Índice negativo: se cuenta desde el final (-1 es el último). Equivale a la posición ${i}.`:`Posición ${a}: se cuenta desde 0, así que es el elemento nº ${a+1}.`}
+    }
+    $('#sc').innerHTML=L.map((v,i)=>`<div class="cell ${sel.includes(i)?'hi':''}"><small>${i}</small><b>${v}</b><small>${i-6}</small></div>`).join('');
+    $('#so').innerHTML=`lista[${esc(t)}] → ${res}`;$('#sw').textContent=msg||'Prueba un índice entre -6 y 5, o una rebanada como 1:4.';
+  };
+  $('#si').oninput=run;run();
+};
+/* --- laboratorio de localización --- */
+class Tup{constructor(a){this.a=a}}
+const T=(...a)=>new Tup(a);
+const PRESETS=[
+ {name:'notas',kind:'lista',data:[3,9,1,7,11,9],src:'notas = [3, 9, 1, 7, 11, 9]',why:'Lista: se localiza por <b>posición</b>. Es la mejor opción cuando el orden importa o vas a recorrerla entera.'},
+ {name:'punto',kind:'tupla',data:T('Madrid',40.4,-3.7),src:'punto = ("Madrid", 40.4, -3.7)',why:'Tupla: se localiza por <b>posición</b> igual que una lista, pero es inmutable. Perfecta para un registro fijo.'},
+ {name:'ciudades',kind:'diccionario',data:{Madrid:27.3,Sevilla:33.5,Soria:19.5},src:'ciudades = {"Madrid": 27.3, "Sevilla": 33.5, "Soria": 19.5}',why:'Diccionario: se localiza por <b>clave</b>. No importa en qué posición esté el dato, importa cómo se llama.'},
+ {name:'alumnos',kind:'lista de diccionarios',data:[{nombre:'Ana',edad:20,notas:[7,9,10]},{nombre:'Luis',edad:22,notas:[5,6,8]},{nombre:'Marta',edad:21,notas:[9,9,10]}],src:'alumnos = [{"nombre":"Ana","edad":20,"notas":[7,9,10]}, {"nombre":"Luis","edad":22,"notas":[5,6,8]}, {"nombre":"Marta","edad":21,"notas":[9,9,10]}]',why:'Lista de diccionarios: <b>posición</b> para elegir el registro y <b>clave</b> para elegir el campo. Así son los JSON y los CSV leídos con DictReader.'},
+ {name:'tienda',kind:'diccionario de listas y tuplas',data:{frutas:['pera','uva','kiwi'],precios:[1.2,2.5,3.1],stock:T(10,0,25)},src:'tienda = {"frutas": ["pera","uva","kiwi"], "precios": [1.2, 2.5, 3.1], "stock": (10, 0, 25)}',why:'Diccionario de listas: cada clave es una "columna". El dato de la fila k está en la misma posición k de cada columna (como en un DataFrame).'},
+ {name:'empresa',kind:'estructura anidada profunda',data:{nombre:'PyCorp',equipos:[{id:'dev',miembros:[T('Ana',1800),T('Raúl',2100)]},{id:'ops',miembros:[T('Eva',1600)]}]},src:'empresa = {"nombre": "PyCorp", "equipos": [{"id":"dev","miembros":[("Ana",1800),("Raúl",2100)]}, {"id":"ops","miembros":[("Eva",1600)]}]}',why:'Cuatro niveles: dict → lista → dict → lista de tuplas. Se lee de fuera hacia dentro, un corchete por nivel.'}
+];
+const typeName=v=>v instanceof Tup?'tuple':Array.isArray(v)?'list':v&&typeof v==='object'?'dict':typeof v==='string'?'str':Number.isInteger(v)?'int':'float';
+function pyRepr(v){
+  if(v instanceof Tup)return '('+v.a.map(pyRepr).join(', ')+(v.a.length===1?',':'')+')';
+  if(Array.isArray(v))return '['+v.map(pyRepr).join(', ')+']';
+  if(v&&typeof v==='object')return '{'+Object.entries(v).map(([k,x])=>`'${k}': ${pyRepr(x)}`).join(', ')+'}';
+  if(typeof v==='string')return `'${v}'`;return String(v);
+}
+function parseExpr(src,name){
+  src=src.trim();
+  if(!src.startsWith(name)){const m=src.match(/^[A-Za-z_]\w*/);return{err:`NameError: name '${m?m[0]:src.slice(0,8)}' is not defined (la variable se llama ${name})`}}
+  let r=src.slice(name.length).trim(),toks=[];
+  if(!r)return{toks};
+  while(r.length){
+    if(r[0]!=='[')return{err:'SyntaxError: sintaxis no válida. Después del nombre solo se admiten corchetes [ ... ]'};
+    let q=null,d=0,end=-1;
+    for(let i=0;i<r.length;i++){const c=r[i];if(q){if(c===q)q=null}else if(c==='"'||c==="'")q=c;else if(c==='[')d++;else if(c===']'){d--;if(d===0){end=i;break}}}
+    if(end<0)return{err:"SyntaxError: falta cerrar un corchete ']'"};
+    const inn=r.slice(1,end).trim();r=r.slice(end+1).trim();
+    let m;
+    if(/^-?\d+$/.test(inn))toks.push(+inn);
+    else if((m=inn.match(/^"([^"]*)"$|^'([^']*)'$/)))toks.push(m[1]!==undefined?m[1]:m[2]);
+    else if(/^(-?\d*)\s*:\s*(-?\d*)\s*(:\s*(-?\d*))?$/.test(inn)){const p=inn.split(':').map(x=>x.trim());toks.push({s:p.map(x=>x===''?null:+x)})}
+    else if(!inn)return{err:'SyntaxError: corchetes vacíos'};
+    else return{err:`NameError/SyntaxError: "${inn}" no es un número ni un texto. Las claves de texto van entre comillas.`};
+  }
+  return{toks};
+}
+function applyTok(cur,t){
+  const tn=typeName(cur);
+  if(tn==='int'||tn==='float')return{err:`TypeError: '${tn}' object is not subscriptable (ya has llegado a un dato final y no se puede entrar más)`};
+  if(tn==='dict'){
+    if(typeof t==='object')return{err:"TypeError: unhashable type: 'slice' (un diccionario no admite rebanadas)"};
+    if(typeof t==='number')return{err:`KeyError: ${t} (en un diccionario se usa la CLAVE, no la posición)`};
+    if(!Object.prototype.hasOwnProperty.call(cur,t))return{err:`KeyError: '${t}' (esa clave no existe; claves: ${Object.keys(cur).map(k=>"'"+k+"'").join(', ')})`};
+    return{v:cur[t]};
+  }
+  const arr=cur instanceof Tup?cur.a:Array.isArray(cur)?cur:[...cur],n=arr.length;
+  const lab=tn==='list'?'list':tn==='tuple'?'tuple':'string';
+  if(typeof t==='string')return{err:`TypeError: ${lab} indices must be integers or slices, not str (aquí se usa un número de posición)`};
+  if(typeof t==='number'){if(t>=n||t<-n)return{err:`IndexError: ${lab} index out of range (hay ${n} elementos: posiciones 0 a ${n-1})`};const x=arr[t<0?t+n:t];return{v:tn==='str'?x:x}}
+  const [a,b,s]=t.s;const ix=sliceIdx(n,a,b,s===undefined||s===null?1:s);if(!ix)return{err:'ValueError: slice step cannot be zero'};
+  const out=ix.map(i=>arr[i]);return{v:tn==='list'?out:tn==='tuple'?new Tup(out):out.join('')};
+}
+function evalExpr(src,P){
+  const p=parseExpr(src,P.name);if(p.err)return p;let cur=P.data;
+  for(const t of p.toks){const r=applyTok(cur,t);if(r.err)return r;cur=r.v}
+  return{v:cur,toks:p.toks};
+}
+const fmtTok=t=>typeof t==='number'?`[${t}]`:typeof t==='string'?`["${t}"]`:`[${t.s.map(x=>x===null?'':x).join(':')}]`;
+function explain(P,toks){
+  let cur=P.data,h=`<li><code>${P.name}</code> es un <b>${typeName(cur)==='dict'?'diccionario':typeName(cur)==='list'?'lista':'tupla'}</b> completo.</li>`;
+  for(const t of toks){
+    const tn=typeName(cur);const r=applyTok(cur,t);if(r.err)break;
+    if(tn==='dict')h+=`<li><code>${fmtTok(t)}</code> → es un <b>diccionario</b>: se entra con la <b>clave</b> "${t}" y obtenemos su valor <code>${esc(pyRepr(r.v))}</code>.</li>`;
+    else if(typeof t==='object')h+=`<li><code>${fmtTok(t)}</code> → <b>rebanada</b> de ${tn==='list'?'lista':tn==='tuple'?'tupla':'texto'}: un trozo, el resultado conserva el tipo: <code>${esc(pyRepr(r.v))}</code>.</li>`;
+    else h+=`<li><code>${fmtTok(t)}</code> → es una <b>${tn==='list'?'lista':tn==='tuple'?'tupla':'cadena'}</b>: se entra con la <b>posición</b> ${t}${t<0?' (desde el final)':' (empezando a contar en 0: es el elemento nº '+(t+1)+')'}. Valor: <code>${esc(pyRepr(r.v))}</code>.</li>`;
+    cur=r.v;
+  }
+  return `<ol class="lesson" style="list-style:none">${h}</ol>`;
+}
+function treeHTML(v,path){
+  const P=JSON.stringify(path).replace(/"/g,'"');
+  const tn=typeName(v);
+  if(tn==='list'||tn==='tuple'||tn==='dict'){
+    const ents=tn==='dict'?Object.entries(v):(tn==='tuple'?v.a:v).map((x,i)=>[i,x]);
+    return `<div class="node"><div class="hd" data-path="${P}" tabindex="0" role="button"><span class="tag">${tn}</span><span>${ents.length} elementos${tn==='tuple'?' · inmutable':''}</span></div>${ents.map(([k,x])=>`<div class="item"><span class="ix">${tn==='dict'?`"${esc(k)}"`:k}</span><div>${treeHTML(x,[...path,k])}</div></div>`).join('')}</div>`;
+  }
+  return `<span class="leaf" data-path="${P}" tabindex="0" role="button">${esc(pyRepr(v))}</span>`;
+}
+const CHALL=[
+ [0,'b','Localiza el número 11.','notas[4]'],[0,'b','Obtén la sublista [9, 1, 7].','notas[1:4]'],
+ [1,'b','Obtén la latitud 40.4 de la tupla.','punto[1]'],[2,'b','Obtén la temperatura de Soria.','ciudades["Soria"]'],
+ [3,'i','Obtén la segunda nota de Luis (un 6).','alumnos[1]["notas"][1]'],[3,'i',"Obtén el nombre de la tercera alumna ('Marta').",'alumnos[2]["nombre"]'],
+ [4,'i','Obtén el precio de la uva (2.5). Pista: ¿en qué posición está la uva en "frutas"?','tienda["precios"][1]'],
+ [4,'i','Obtén el stock del kiwi (25).','tienda["stock"][2]'],
+ [3,'p','Obtén la última nota de Ana (10) usando un índice negativo.','alumnos[0]["notas"][-1]'],
+ [5,'p','Obtén el sueldo de Raúl (2100).','empresa["equipos"][0]["miembros"][1][1]'],
+ [5,'p',"Obtén el nombre del único miembro de ops ('Eva').",'empresa["equipos"][1]["miembros"][0][0]'],
+ [5,'p',"Obtén la lista de miembros del equipo 'dev'.",'empresa["equipos"][0]["miembros"]']
+];
+W.loc=el=>{
+  let pi=3,sel=[],ci=null;
+  const draw=()=>{
+    const P=PRESETS[pi];
+    el.innerHTML=`<div class="seg" style="margin-bottom:1rem">${PRESETS.map((p,k)=>`<button data-pi="${k}" class="${k===pi?'on':''}">${p.name}</button>`).join('')}</div>
+    <p class="lbl">${P.kind}</p><pre class="code" style="white-space:pre-wrap">${hl(P.src)}</pre>
+    <div class="fb"><b>¿Por qué esta estructura?</b> ${P.why}</div>
+    <div class="row2" style="margin-top:1rem"><div><span class="lbl">Estructura (haz clic en cualquier dato o contenedor)</span><div class="tree" id="tr">${treeHTML(P.data,[])}</div></div>
+    <div><span class="lbl">Camino hasta el dato</span><div id="lx"><p class="note">Haz clic en un dato y te enseño el camino y el porqué de cada corchete.</p></div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0"><span class="lbl">Prueba tú: escribe una expresión</span>
+    <div style="display:flex;gap:.5rem;margin-top:.4rem"><input type="text" id="ex" class="mono" placeholder='${P.name}[0]' autocomplete="off"><button class="btn" id="exg">Evaluar</button></div><div id="exo" style="margin-top:.6rem"></div></div></div>
+    <h3>Retos de localización</h3><div class="seg" id="cl" style="flex-wrap:wrap"></div><div id="cc" style="margin-top:1rem"></div>`;
+    $$('[data-pi]',el).forEach(b=>b.onclick=()=>{pi=+b.dataset.pi;draw()});
+    const pick=n=>{const path=JSON.parse(n.dataset.path.replace(/"/g,'"'));
+      $$('.sel',el).forEach(x=>x.classList.remove('sel'));n.classList.add('sel');
+      const expr=P.name+path.map(fmtTok).join('');const r=evalExpr(expr,P);
+      $('#lx').innerHTML=`<div class="out"><span class="g">${esc(expr)}</span>\n→ ${esc(pyRepr(r.v))}</div>${explain(P,path)}`;
+      say(`Para llegar ahí: ${expr}. Lee los corchetes de izquierda a derecha, uno por nivel.`,'think')};
+    $$('[data-path]',el).forEach(n=>{n.onclick=e=>{e.stopPropagation();pick(n)};n.onkeydown=e=>{if(e.key==='Enter'){e.stopPropagation();pick(n)}}});
+    const go=()=>{const s=$('#ex').value;const r=evalExpr(s,P);
+      $('#exo').innerHTML=r.err?`<div class="out"><span class="e">${esc(r.err)}</span></div>`:`<div class="out"><span class="g">→ ${esc(pyRepr(r.v))}</span></div>${explain(P,r.toks)}`;
+      say(r.err?'Python se queja, y su mensaje te dice exactamente por qué. Léelo.':'Así es: cada corchete entra un nivel.',r.err?'sad':'happy')};
+    $('#exg').onclick=go;$('#ex').onkeydown=e=>{if(e.key==='Enter')go()};
+    // retos
+    const list=CHALL.map((c,k)=>({c,k})).filter(o=>o.c[1]===S.level);
+    $('#cl').innerHTML=list.map((o,n)=>`<button data-c="${o.k}" class="${ci===o.k?'on':''}">Reto ${n+1}${S.done['loc'+o.k]?' <i class="fa-solid fa-check"></i>':''}</button>`).join('');
+    $$('[data-c]',el).forEach(b=>b.onclick=()=>{ci=+b.dataset.c;pi=CHALL[ci][0];draw();challenge()});
+    if(ci!==null)challenge(true);
+  };
+  const challenge=keep=>{
+    const c=CHALL[ci],P=PRESETS[c[0]];const tgt=evalExpr(c[3],P).v;
+    const box=$('#cc');box.innerHTML=`<div class="q"><span class="lbl">Reto de nivel ${LV[c[1]]} · usa la variable <b class="mono">${P.name}</b></span><div class="qt" style="margin-top:.4rem">${esc(c[2])}</div>
+    <div style="display:flex;gap:.5rem"><input type="text" id="ci" class="mono" placeholder='${P.name}[...]' autocomplete="off"><button class="btn" id="cg">Comprobar</button><button id="cs">Solución</button></div><div id="co" style="margin-top:.8rem"></div></div>`;
+    const chk=()=>{const r=evalExpr($('#ci').value,P);
+      if(r.err){$('#co').innerHTML=`<div class="fb b"><span class="mono">${esc(r.err)}</span></div>`;say('Lee el error: te dice qué tipo de estructura tienes en ese punto.','sad');return}
+      if(pyRepr(r.v)===pyRepr(tgt)){$('#co').innerHTML=`<div class="fb g"><b>Correcto.</b> Resultado ${esc(pyRepr(r.v))}.</div>${explain(P,r.toks)}`;
+        if(!S.done['loc'+ci]){S.done['loc'+ci]=1;addXP(20)}say('¡Has localizado el dato! Eso es leer una estructura de fuera hacia dentro.','wow')}
+      else{$('#co').innerHTML=`<div class="fb b">Tu expresión devuelve <span class="mono">${esc(pyRepr(r.v))}</span> pero buscamos <span class="mono">${esc(pyRepr(tgt))}</span>. Revisa qué hay en cada nivel.</div>`;say('Cerca. Comprueba cada nivel por separado, uno a uno.','sad')}};
+    $('#cg').onclick=chk;$('#ci').onkeydown=e=>{if(e.key==='Enter')chk()};
+    $('#cs').onclick=()=>{const p=parseExpr(c[3],P.name);$('#co').innerHTML=`<div class="fb"><span class="mono">${esc(c[3])}</span></div>${explain(P,p.toks)}`};
+    if(!keep)box.scrollIntoView({block:'nearest'});
+  };
+  draw();
+};
+/* --- pandas --- */
+const EMP=[{empleado:'Juan',edad:35,salario:1200,departamento:'ventas'},{empleado:'Marcos',edad:39,salario:1300,departamento:'informática'},{empleado:'Raquel',edad:28,salario:1100,departamento:'ventas'},{empleado:'María',edad:45,salario:1700,departamento:'informática'}];
+const tbl=(cols,rows,hi)=>`<table><tr><th></th>${cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map((v,i)=>`<td class="${hi&&hi(r,i)?'hi':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</table>`;
+const ALL=(rows)=>tbl(['empleado','edad','salario','departamento'],rows.map(r=>[r.i,r.empleado,r.edad,r.salario,r.departamento]));
+const DFOPS=[
+ ['df',()=>ALL(EMP.map((r,i)=>({...r,i}))),'Un DataFrame: cada fila tiene un índice numérico (como la posición en una lista) y cada columna un nombre (como la clave de un diccionario).'],
+ ['df.iloc[2]["empleado"]',()=>`<div class="out g">Raquel</div>`,'iloc[2] elige la fila por POSICIÓN (la 3ª) y ["empleado"] elige la columna por NOMBRE: posición + clave, igual que en una lista de diccionarios.'],
+ ['df["edad"].mean()',()=>`<div class="out g">36.75</div>`,'Una columna es una Series; mean() promedia: (35+39+28+45)/4 = 36.75.'],
+ ['df.query("edad > 35")',()=>ALL(EMP.map((r,i)=>({...r,i})).filter(r=>r.edad>35)),'query filtra filas con una condición. Conservan su índice original (1 y 3).'],
+ ['df.sort_values(by=["edad"])',()=>ALL(EMP.map((r,i)=>({...r,i})).sort((a,b)=>a.edad-b.edad)),'Ordena por la columna edad de menor a mayor. Los índices viajan con cada fila.'],
+ ['df.groupby("departamento")["salario"].mean()',()=>tbl(['salario'],[['informática',1500],['ventas',1150]]),'groupby agrupa por departamento y mean calcula la media de cada grupo: informática (1300+1700)/2 y ventas (1200+1100)/2. El resultado es una Series con el departamento como índice.'],
+ ['df["salario"].map(lambda v: v * 1.10)',()=>tbl(['salario'],EMP.map((r,i)=>[i,(r.salario*1.1).toFixed(1)])),'map aplica la función a cada valor de la columna: sube el salario un 10%.']
+];
+W.df=el=>{
+  let k=0;const draw=()=>{const o=DFOPS[k];
+    el.innerHTML=`<p class="lbl">Datos: empresa.csv (4 empleados)</p><div class="seg" style="margin:.6rem 0 1rem">${DFOPS.map((d,i)=>`<button data-k="${i}" class="${i===k?'on':''} mono" style="font-size:.78rem">${i+1}</button>`).join('')}</div>
+    <pre class="code">${hl('>>> '+o[0])}</pre><div style="overflow:auto">${o[1]()}</div><div class="fb" style="margin-top:1rem">${esc(o[2])}</div>`;
+    $$('[data-k]',el).forEach(b=>b.onclick=()=>{k=+b.dataset.k;draw()})};draw();
+};
+/* --- numpy --- */
+W.np=el=>{
+  const A=[[3,2,7],[9,4,1]];let th=5,fn='filtro';
+  const run=()=>{
+    const hit=[];A.forEach(r=>r.forEach(v=>{if(v>th)hit.push(v)}));
+    let out,c;
+    if(fn==='filtro'){c=`a1[a1 > ${th}]`;out='['+hit.join(' ')+']'}
+    else if(fn==='sort'){c='np.sort(a1)';out='[[2 3 7]\n [1 4 9]]'}
+    else if(fn==='max'){c='np.amax(a1)  # y np.amin(a1) = 1';out='9'}
+    else if(fn==='avg'){c='np.average(a1)';out=String(+((3+2+7+9+4+1)/6).toFixed(4))}
+    else{c='np.unique(a1)';out='[1 2 3 4 7 9]'}
+    el.innerHTML=`<p class="mono">a1 = np.array([[3, 2, 7], [9, 4, 1]])</p>
+    <table style="width:auto;margin:.8rem 0">${A.map(r=>`<tr>${r.map(v=>`<td class="${fn==='filtro'&&v>th?'hi':''}" style="width:60px;text-align:center;font-size:1.2rem">${v}</td>`).join('')}</tr>`).join('')}</table>
+    <div class="seg" style="margin-bottom:1rem">${[['filtro','Filtrar'],['sort','sort'],['max','amax/amin'],['avg','average'],['uni','unique']].map(([k,t])=>`<button data-f="${k}" class="${k===fn?'on':''}">${t}</button>`).join('')}</div>
+    ${fn==='filtro'?`<label class="lbl">umbral: <b class="ac mono">${th}</b></label><input type="range" min="0" max="10" value="${th}" id="nth" style="width:100%;accent-color:#ff7a1a">`:''}
+    <pre class="code">${hl('>>> print('+c+')')}</pre><div class="out g">${esc(out)}</div>
+    <div class="fb" style="margin-top:1rem">${fn==='filtro'?'La condición crea una "máscara" de True/False del mismo tamaño que el array; solo los elementos con True (marcados) sobreviven, y se devuelven como array de 1 dimensión, leyendo por filas.':'NumPy opera sobre todos los elementos a la vez, sin escribir bucles.'}</div>`;
+    $$('[data-f]',el).forEach(b=>b.onclick=()=>{fn=b.dataset.f;run()});
+    const r=$('#nth',el);if(r){r.oninput=()=>{th=+r.value;run();$('#nth',el).focus()}}
+  };run();
+};
+
+/* ===================== VISTAS ===================== */
+const TABS=[['inicio','Inicio','house'],['lecciones','Lecciones','book-open'],['lab','Laboratorio','flask'],['retos','Retos','bolt'],['juegos','Juegos','gamepad']];
+function paintNav(){
+  $('#nav').innerHTML=TABS.map(t=>`<button data-t="${t[0]}" class="${S.tab===t[0]?'on':''}"><i class="fa-solid fa-${t[2]}"></i> <span>${t[1]}</span></button>`).join('');
+  $$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));
+  $('#lvlseg').innerHTML=Object.entries(LV).map(([k,v])=>`<button data-l="${k}" class="${S.level===k?'on':''}">${v}</button>`).join('');
+  $$('#lvlseg button').forEach(b=>b.onclick=()=>{S.level=b.dataset.l;save();curLesson=null;go(S.tab,true);say(`Nivel ${LV[S.level]} activado. ${{b:'Empezamos por los cimientos.',i:'Toca dominar listas, tuplas y diccionarios.',p:'Vamos a trabajar con datos reales.'}[S.level]}`,'happy')});
+}
+let curLesson=null;
+function go(t,keep){S.tab=t;save();paintNav();window.scrollTo(0,0);QZ=null;V[t]()}
+const V={};
+V.inicio=()=>{
+  const total=LESSONS.length,done=Object.keys(S.done).filter(k=>/^l\d/.test(k)).length;
+  $('#view').innerHTML=`<section class="hero fade"><div><span class="lbl"><span class="dot"></span>Academia interactiva · Python 3</span>
+  <h1 style="margin-top:1rem">Aprende Python viendo cómo <span class="ac">piensa</span> el código.</h1>
+  <p class="lead">Un profesor que te enseña desde variables hasta pandas, te hace preguntas, te corrige y te reta. Tres niveles, simuladores paso a paso y juegos para dominar bucles, condicionales, listas, tuplas y diccionarios.</p>
+  <div class="cta"><button class="btn" onclick="go('lecciones')"><i class="fa-solid fa-play"></i> Empezar la clase</button><button onclick="go('juegos')"><i class="fa-solid fa-gamepad"></i> Ir a los juegos</button></div></div>
+  <figure class="fig"><svg viewBox="0 0 360 250" style="width:100%;display:block" role="img" aria-label="Figura 1: asignación de variables como cajas">
+   <text x="10" y="22" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="12">num = 100</text>
+   <path d="M120 18 H160" stroke="#ff7a1a" stroke-width="3"/><path d="M154 11 L162 18 L154 25" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+   <rect x="170" y="2" width="90" height="34" fill="none" stroke="#2c3039" stroke-width="2"/><rect x="170" y="2" width="90" height="12" fill="#1d2027"/><text x="178" y="12" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="9">num</text><text x="215" y="30" fill="#ecebe6" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14">100</text>
+   <text x="10" y="82" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="12">lista = [3, 9, 1]</text>
+   ${[3,9,1].map((v,i)=>`<rect x="${170+i*56}" y="58" width="56" height="42" fill="${i===1?'#ff7a1a':'none'}" stroke="#2c3039" stroke-width="2"/><text x="${198+i*56}" y="72" text-anchor="middle" fill="${i===1?'#0e0f12':'#a3a3ad'}" font-family="JetBrains Mono,monospace" font-size="10">${i}</text><text x="${198+i*56}" y="92" text-anchor="middle" fill="${i===1?'#0e0f12':'#ecebe6'}" font-family="JetBrains Mono,monospace" font-size="16">${v}</text>`).join('')}
+   <text x="10" y="150" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="12">d = {"Soria": 19.5}</text>
+   <rect x="170" y="126" width="84" height="42" fill="none" stroke="#2c3039" stroke-width="2"/><text x="212" y="152" text-anchor="middle" fill="#ffa35c" font-family="JetBrains Mono,monospace" font-size="12">"Soria"</text>
+   <path d="M254 147 H276" stroke="#ff7a1a" stroke-width="3"/><rect x="278" y="126" width="72" height="42" fill="#ff7a1a"/><text x="314" y="153" text-anchor="middle" fill="#0e0f12" font-family="JetBrains Mono,monospace" font-size="14" font-weight="700">19.5</text>
+   <text x="10" y="215" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="12">lista[1] → 9</text><text x="10" y="236" fill="#a3a3ad" font-family="JetBrains Mono,monospace" font-size="12">d["Soria"] → 19.5</text>
+   <circle cx="330" cy="215" r="14" fill="#ff7a1a"/><circle cx="300" cy="232" r="8" fill="#ff7a1a"/><circle cx="274" cy="240" r="4" fill="#ff7a1a"/></svg>
+   <figcaption class="lbl">Fig. 1 · Una lista se localiza por posición; un diccionario, por clave.</figcaption></figure></section>
+  <section class="stats"><div><span class="lbl">Lecciones</span><b>${total}</b></div><div><span class="lbl">Preguntas</span><b>${Q.length}</b></div><div><span class="lbl">Simuladores</span><b>7</b></div><div><span class="lbl">Tu progreso</span><b>${done}/${total}</b></div></section>
+  <section class="sec"><h2>Elige tu camino</h2><div class="levels">
+   ${[['b','01','Básico','Variables, operadores, if/elif/match, for y while. Entenderás cómo se ejecuta cada línea.'],['i','02','Intermedio','Listas, tuplas, conjuntos, diccionarios, sus combinaciones, funciones, lambdas y cadenas.'],['p','03','Profesional','Ficheros, errores, CSV, JSON, fechas, pandas y NumPy: datos reales.']].map(r=>`<div class="row"><span class="n mono">${r[1]}</span><div><h2 style="font-size:1.4rem">${r[2]}</h2><p style="color:var(--mut)">${r[3]}</p></div><button class="btn" onclick="S.level='${r[0]}';curLesson=null;go('lecciones')">Entrar</button></div>`).join('')}</div></section>
+  <section class="sec"><h2>Tu método de estudio</h2><ul class="lesson"><li><b>Lee</b> la lección y entiende el porqué.</li><li><b>Juega con el simulador</b> hasta que puedas predecir el resultado antes de verlo.</li><li><b>Responde el mini-test</b> de cada lección y el reto de tu nivel.</li><li><b>Domina las estructuras</b> en el laboratorio: localiza datos dentro de listas, tuplas y diccionarios combinados.</li><li><b>Refuerza jugando</b>: duelo de operadores, ordenar código, cazabugs y clasificador de estructuras.</li></ul></section>`;
+  say('¡Hola! Soy el Profe Py. Elige tu nivel arriba a la derecha y empezamos. Recuerda: en programación se aprende ejecutando el código en tu cabeza.','happy');
+};
+V.lecciones=()=>{
+  const list=LESSONS.filter(l=>l.l===S.level);if(!curLesson||!list.find(l=>l.id===curLesson))curLesson=list[0].id;
+  const L=LESSONS.find(l=>l.id===curLesson);
+  $('#view').innerHTML=`<div class="layout"><aside class="side">${list.map(l=>`<button data-id="${l.id}" class="${l.id===curLesson?'on':''}"><i class="fa-solid fa-${l.ic}"></i><span>${l.id}. ${l.t}</span>${S.done['l'+l.id]?'<i class="fa-solid fa-circle-check s"></i>':''}</button>`).join('')}</aside>
+  <article class="lesson fade"><span class="tag">${LV[L.l]} · Lección ${L.id}</span><h2 style="margin-top:.6rem">${L.t}</h2>
+  <ul>${L.pts.map(p=>`<li>${p}</li>`).join('')}</ul>${code(L.code)}
+  <div class="why"><span class="lbl"><i class="fa-solid fa-lightbulb"></i> Por qué</span>${L.why}</div>${L.nt?`<div class="note">${L.nt}</div>`:''}
+  ${L.w?`<div class="panel"><span class="lbl"><i class="fa-solid fa-flask"></i> Simulador interactivo</span><div id="wg"></div></div>`:''}
+  <h3>Mini-test de la lección</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><button class="btn" id="mq">Empezar mini-test</button><button id="mk">Marcar lección como completada</button></div>
+  <div id="qzbox"></div>
+  <div style="display:flex;justify-content:space-between;margin-top:2rem;gap:.6rem"><button id="lp"><i class="fa-solid fa-arrow-left"></i> Anterior</button><button id="ln">Siguiente <i class="fa-solid fa-arrow-right"></i></button></div></article></div>`;
+  $$('.side button').forEach(b=>b.onclick=()=>{curLesson=+b.dataset.id;V.lecciones();window.scrollTo(0,0)});
+  if(L.w)W[L.w]($('#wg'));
+  $('#mq').onclick=()=>{startQuiz(q=>q[0]===L.id,5,'Mini-test: '+L.t);if(!QZ)return};
+  $('#mk').onclick=()=>{if(!S.done['l'+L.id]){S.done['l'+L.id]=1;addXP(15);V.lecciones()}};
+  const idx=list.findIndex(l=>l.id===L.id);
+  $('#lp').onclick=()=>{if(idx>0){curLesson=list[idx-1].id;V.lecciones();window.scrollTo(0,0)}};
+  $('#ln').onclick=()=>{if(idx<list.length-1){curLesson=list[idx+1].id;V.lecciones();window.scrollTo(0,0)}else go('retos')};
+  const m=Q.filter(q=>q[0]===L.id).length;
+  if(!m)$('#mq').classList.add('hidden');
+  say({1:'Recuerda: input() siempre devuelve texto.',2:'Prueba a cambiar x e y y predice cada resultado antes de mirar.',3:'Pulsa Siguiente y fíjate en qué línea resalta: ahí está Python ahora mismo.',4:'Cambia el deslizador y comprueba cuántas vueltas da el bucle.',5:'Escribe 1:4 y luego ::-1. ¿Entiendes por qué sale lo que sale?',6:'Las tuplas protegen tus datos. Los conjuntos eliminan duplicados.',7:'Con diccionarios preguntas por el nombre, no por la posición.',8:'Esta es la lección clave. Haz clic en los datos del árbol y lee el camino.',9:'map transforma, filter selecciona, reduce resume.',10:'Un texto es una secuencia: sus índices funcionan como en una lista.',11:'Los datos reales viven en ficheros. Y los ficheros fallan: usa try/except.',12:'Convierte a fecha, opera y presenta. Nunca operes con fechas como texto.',13:'Pandas es una tabla con superpoderes. Prueba las 7 operaciones.',14:'Mueve el umbral y mira qué elementos sobreviven al filtro.'}[L.id],'happy');
+};
+V.lab=()=>{
+  $('#view').innerHTML=`<section class="sec fade"><span class="lbl"><span class="dot"></span>Laboratorio de datos</span><h2 style="margin-top:.6rem">Localiza cualquier dato en listas, tuplas y diccionarios</h2>
+  <p style="color:var(--mut)">Aquí es donde se afianza el control de las estructuras. Explora el árbol, evalúa tus propias expresiones y supera retos. Los errores son reales: IndexError, KeyError y TypeError.</p>
+  <div class="panel"><div id="wg"></div></div>
+  <h3>Chuleta: ¿qué corchete uso?</h3>
+  <table><tr><th>Estructura</th><th>Se localiza por</th><th>Ejemplo</th><th>¿Modificable?</th><th>Error típico</th></tr>
+  <tr><td>lista</td><td>posición (0, 1, 2... o -1)</td><td>l[2]</td><td>sí</td><td>IndexError</td></tr>
+  <tr><td>tupla</td><td>posición</td><td>t[2]</td><td>no</td><td>TypeError al asignar</td></tr>
+  <tr><td>diccionario</td><td>clave</td><td>d["Soria"]</td><td>sí</td><td>KeyError</td></tr>
+  <tr><td>conjunto</td><td>no se localiza (solo "x in s")</td><td>"a" in s</td><td>sí</td><td>TypeError si indexas</td></tr>
+  <tr><td>cadena</td><td>posición</td><td>c[3]</td><td>no</td><td>TypeError al asignar</td></tr></table>
+  <div class="why" style="margin-top:1.5rem"><span class="lbl">Método de 3 preguntas</span>1) ¿Qué tipo es el nivel donde estoy? 2) Si es lista o tupla: <b>¿en qué posición</b>? Si es diccionario: <b>¿con qué clave</b>? 3) ¿Qué tengo ahora? Repite hasta llegar al dato.</div></section>`;
+  W.loc($('#wg'));say('Haz clic en cualquier dato del árbol. Te dibujo el camino y te explico cada corchete.','happy');
+};
+V.retos=()=>{
+  const cnt=f=>Q.filter(f).length;
+  $('#view').innerHTML=`<section class="sec fade"><span class="lbl"><span class="dot"></span>Retos</span><h2 style="margin-top:.6rem">¿Entiendes lo que hace el código?</h2>
+  <p style="color:var(--mut)">Preguntas de interpretación: lees el código y predices el resultado. Con explicación de cada respuesta.</p>
+  <div class="gamegrid" style="margin-top:1.2rem">
+   <button onclick="startQuiz(q=>q[1]===S.level,10,'Reto ${LV[S.level]}');$('#qzbox').scrollIntoView()"><i class="fa-solid fa-layer-group"></i><div><b>Reto ${LV[S.level]}</b><span>10 preguntas de tu nivel (${cnt(q=>q[1]===S.level)} disponibles)</span></div></button>
+   <button onclick="startQuiz(q=>[5,6,7,8].includes(q[0]),10,'Estructuras de datos');$('#qzbox').scrollIntoView()"><i class="fa-solid fa-diagram-project"></i><div><b>Estructuras de datos</b><span>Listas, tuplas, diccionarios y combinaciones</span></div></button>
+   <button onclick="startQuiz(q=>[3,4].includes(q[0]),10,'Control de flujo');$('#qzbox').scrollIntoView()"><i class="fa-solid fa-code-branch"></i><div><b>Control de flujo</b><span>if, elif, match, for, while, break y continue</span></div></button>
+   <button onclick="startQuiz(q=>true,15,'Examen final');$('#qzbox').scrollIntoView()"><i class="fa-solid fa-graduation-cap"></i><div><b>Examen final</b><span>15 preguntas mezcladas de todos los niveles</span></div></button></div>
+  <div id="qzbox" style="margin-top:1.2rem"></div>
+  <h3>Tus mejores resultados</h3>${Object.keys(S.best).length?`<table>${Object.entries(S.best).map(([k,v])=>`<tr><td>${esc(k)}</td><td style="width:100px">${v}%</td></tr>`).join('')}</table>`:'<p class="note">Todavía no has completado ningún reto.</p>'}</section>`;
+  say('Lee el código línea a línea y ejecútalo en tu cabeza antes de mirar las opciones.','think');
+};
+/* ===================== JUEGOS ===================== */
+let GT=null;
+V.juegos=()=>{
+  clearTimeout(GT);
+  $('#view').innerHTML=`<section class="sec fade"><span class="lbl"><span class="dot"></span>Zona de juegos</span><h2 style="margin-top:.6rem">Aprender jugando</h2>
+  <div class="gamegrid" style="margin-top:1rem">
+  <button onclick="G.duel()"><i class="fa-solid fa-stopwatch"></i><div><b>Duelo de operadores</b><span>10 rondas contrarreloj: aritméticos, relacionales y lógicos.</span></div></button>
+  <button onclick="G.parsons()"><i class="fa-solid fa-arrow-down-1-9"></i><div><b>Ordena el código</b><span>Reconstruye programas con la indentación correcta.</span></div></button>
+  <button onclick="G.bug()"><i class="fa-solid fa-bug"></i><div><b>Caza-bugs</b><span>Toca la línea que contiene el error.</span></div></button>
+  <button onclick="G.cls()"><i class="fa-solid fa-shapes"></i><div><b>Clasificador de estructuras</b><span>¿Lista, tupla, diccionario, conjunto o cadena? ¿Se puede modificar?</span></div></button></div>
+  <div id="game" style="margin-top:1.5rem"></div></section>`;
+  say('Elige un juego. Los puntos de los juegos también cuentan como XP.','wow');
+};
+const G={};
+/* duelo */
+function genDuel(){
+  const t=rnd(3);let q,ans,opts;
+  if(t===0){
+    const op=pick(['//','%','**','+','-','*']),a=2+rnd(9),b=op==='**'?1+rnd(3):1+rnd(5);
+    const r=op==='//'?Math.floor(a/b):op==='%'?a%b:op==='**'?Math.pow(a,b):op==='+'?a+b:op==='-'?a-b:a*b;
+    q=`${a} ${op} ${b}`;ans=String(r);
+    const s=new Set([r]);[r+1,r-1,r+2,r*2,r+3].forEach(x=>{if(s.size<4&&!s.has(x))s.add(x)});opts=shuffle([...s].map(String));
+  }else if(t===1){
+    const a=1+rnd(9),b=1+rnd(9),op=pick(['==','!=','<','>','<=','>=']);
+    const r={'==':a==b,'!=':a!=b,'<':a<b,'>':a>b,'<=':a<=b,'>=':a>=b}[op];
+    q=`${a} ${op} ${b}`;ans=r?'True':'False';opts=['True','False'];
+  }else{
+    const a=1+rnd(9),b=1+rnd(9),c=1+rnd(9),d=1+rnd(9),lg=pick(['and','or']),neg=rnd(2);
+    let x=a>b,y=c==d,r=lg==='and'?(x&&y):(x||y);
+    q=`(${a} > ${b}) ${lg} (${c} == ${d})`;if(neg){q='not ('+q+')';r=!r}
+    ans=r?'True':'False';opts=['True','False'];
+  }
+  return{q,ans,opts};
+}
+G.duel=()=>{
+  let n=0,score=0,streak=0,cur,tm;
+  const box=$('#game');
+  const next=()=>{
+    if(n>=10){clearTimeout(tm);addXP(Math.round(score/5));box.innerHTML=`<div class="q"><span class="lbl">Duelo terminado</span><h2>${score} puntos</h2><p>Mejor racha: ${S.maxStreak||0}</p><button class="btn" onclick="G.duel()" style="margin-top:1rem">Jugar otra vez</button></div>`;say(score>=100?'¡Eres una calculadora humana de Python!':'Repasa // y % y vuelve a intentarlo.','wow');return}
+    n++;cur=genDuel();
+    box.innerHTML=`<div class="q"><span class="lbl">Ronda ${n}/10 · puntos ${score} · racha ${streak}</span><div class="bar"><div id="tb"></div></div><div class="bigq">${esc(cur.q)}</div><div class="opts">${cur.opts.map(o=>`<button class="mono">${o}</button>`).join('')}</div><div id="gfb"></div></div>`;
+    const tb=$('#tb');tb.style.transition='none';tb.style.width='100%';void tb.offsetWidth;tb.style.transition='width 8s linear';tb.style.width='0%';
+    const fin=(v)=>{clearTimeout(tm);const ok=v===cur.ans;
+      $$('.opts button',box).forEach(b=>{b.disabled=true;if(b.textContent===cur.ans)b.classList.add('good');else if(b.textContent===v)b.classList.add('bad')});
+      if(ok){streak++;S.maxStreak=Math.max(S.maxStreak||0,streak);score+=10+Math.min(streak,5)*2;say(pick(PRAISE),'happy')}else{streak=0;say(v===null?'Se acabó el tiempo.':`Era ${cur.ans}. Revisa la precedencia y el significado del operador.`,'sad')}
+      GT=setTimeout(next,900)};
+    $$('.opts button',box).forEach(b=>b.onclick=()=>fin(b.textContent));
+    tm=setTimeout(()=>fin(null),8000);GT=tm;
+  };next();
+};
+/* parsons */
+const PARS=[
+ {t:'Mayor de dos números',l:['n = 5','a = 7','if n > a:','    print("El mayor es", n)','else:','    print("El mayor es", a)']},
+ {t:'Suma de 1 a 9',l:['suma = 0','for n in range(1, 10):','    suma = suma + n','print(suma)']},
+ {t:'Pares de una lista',l:['lista = [2, 4, 5, 1]','for n in lista:','    if n % 2 == 0:','        print(n, "es par")']},
+ {t:'Validar la edad (while)',l:['edad = int(input("Edad: "))','while edad < 0:','    print("Valor incorrecto")','    edad = int(input("Edad: "))','print("Su edad es", edad)']},
+ {t:'Recorrer un diccionario',l:['ciudades = {"Madrid": 27.3, "Soria": 19.5}','for k, v in ciudades.items():','    if v > 20:','        print(k, v)']},
+ {t:'Función con return',l:['def cuadrado(n):','    return n ** 2','resultado = cuadrado(4)','print(resultado)']}
+];
+G.parsons=()=>{
+  let pi=-1;const box=$('#game');
+  const load=()=>{
+    pi=(pi+1)%PARS.length;const P=PARS[pi];let pool=shuffle(P.l.map((t,i)=>({t,i}))),ans=[];
+    const draw=(msg)=>{
+      box.innerHTML=`<div class="q"><span class="lbl">Puzzle ${pi+1}/${PARS.length}</span><div class="qt">${P.t}: haz clic en las líneas para colocarlas en orden.</div>
+      <div class="pz"><div><span class="lbl">Disponibles</span><div id="pp">${pool.map((o,k)=>`<div class="ln" data-k="${k}">${esc(o.t)||' '}</div>`).join('')}</div></div>
+      <div><span class="lbl">Tu programa (clic para quitar)</span><div class="zone" id="pa">${ans.map((o,k)=>`<div class="ln" data-a="${k}">${esc(o.t)}</div>`).join('')}</div></div></div>
+      <div style="display:flex;gap:.5rem;margin-top:1rem"><button class="btn" id="pc" ${pool.length?'disabled':''}>Comprobar</button><button id="pn">Otro puzzle</button></div><div id="pf">${msg||''}</div></div>`;
+      $$('[data-k]',box).forEach(e=>e.onclick=()=>{ans.push(pool.splice(+e.dataset.k,1)[0]);draw()});
+      $$('[data-a]',box).forEach(e=>e.onclick=()=>{pool.push(ans.splice(+e.dataset.a,1)[0]);draw()});
+      $('#pn').onclick=load;
+      $('#pc').onclick=()=>{const ok=ans.every((o,k)=>o.t===P.l[k]);
+        if(ok){say('¡Perfecto! La indentación define los bloques.','wow');addXP(15);draw(`<div class="fb g"><b>Correcto.</b> Resultado:</div>${code(P.l.join('\n'))}`)}
+        else{say('Hay líneas mal colocadas. Piensa qué debe ocurrir primero.','sad');draw(`<div class="fb b">Todavía no. Pista: ${ans.findIndex((o,k)=>o.t!==P.l[k])+1}ª línea incorrecta.</div>`)}};
+    };draw();
+  };load();
+};
+/* cazabugs */
+const BUGS=[
+ {t:'Calcula el mayor',l:['n = 5; a = 7','if n > a','    print(n)','else:','    print(a)'],b:1,w:'Falta el signo de dos puntos (:) al final del if.'},
+ {t:'Suma de 1 a 10',l:['suma = 0','for n in range(1, 10):','    suma = suma + n','print(suma)'],b:1,w:'range(1, 10) llega hasta 9; para incluir el 10 hay que escribir range(1, 11).'},
+ {t:'Suma de dos números',l:['n = input("Número 1: ")','x = input("Número 2: ")','print("la suma es", n + x)'],b:2,w:'input() devuelve texto: n + x concatena ("3"+"4"="34"). Hay que usar int(n) + int(x).'},
+ {t:'Modificar una tupla',l:['mitupla = (4, 9, 3)','print(mitupla[0])','mitupla[1] = 20','print(mitupla)'],b:2,w:'Las tuplas son inmutables: asignar a mitupla[1] lanza TypeError.'},
+ {t:'Temperatura en un diccionario',l:['ciudades = {"Madrid": 27.3, "Soria": 19.5}','print(ciudades["Madrid"])','print(ciudades["Toledo"])'],b:2,w:'La clave "Toledo" no existe: KeyError. Usa una clave existente o añade antes la pareja.'},
+ {t:'Último elemento',l:['lista = [3, 9, 1, 7]','print(lista[0])','print(lista[4])'],b:2,w:'Hay 4 elementos: las posiciones válidas son 0 a 3. lista[4] da IndexError (el último es lista[3] o lista[-1]).'},
+ {t:'Bucle infinito',l:['x = 1','while x < 10:','    print(x)'],b:2,w:'x nunca cambia, así que la condición siempre es True. Falta x = x + 1 dentro del bucle.'},
+ {t:'Nombre de variable',l:['for = 4','print(for)'],b:0,w:'for es una palabra reservada y no puede usarse como identificador.'}
+];
+G.bug=()=>{
+  let bi=-1;const box=$('#game');
+  const load=()=>{bi=(bi+1)%BUGS.length;const B=BUGS[bi];
+    box.innerHTML=`<div class="q"><span class="lbl">Caso ${bi+1}/${BUGS.length}</span><div class="qt">${B.t}: toca la línea con el error.</div><div class="tracecode" style="margin-top:.6rem">${B.l.map((t,k)=>`<button class="bugline" data-k="${k}">${hl(t)||' '}</button>`).join('')}</div><div id="bf"></div></div>`;
+    $$('.bugline',box).forEach(b=>b.onclick=()=>{const k=+b.dataset.k,ok=k===B.b;
+      $$('.bugline',box).forEach((x,i)=>{x.disabled=true;if(i===B.b)x.style.borderColor='var(--ok)';else if(i===k)x.style.borderColor='var(--ko)'});
+      if(ok)addXP(10);say(ok?'¡Bug cazado!':'Ese no era. Lee el porqué.',ok?'wow':'sad');
+      $('#bf').innerHTML=`<div class="fb ${ok?'g':'b'}"><b>${ok?'Correcto.':'No es esa línea.'}</b> ${esc(B.w)}</div><button class="btn" style="margin-top:.8rem" id="bn">Siguiente caso</button>`;$('#bn').onclick=load});
+  };load();
+};
+/* clasificador */
+const CLS=[
+ ['[3, 9, 1, 7]','lista'],['(4, 9, 3)','tupla'],['{"Madrid": 27.3}','diccionario'],['{"uno", "dos", "tres"}','conjunto'],['"Esto es un texto"','cadena'],
+ ['[("Ana", 20), ("Luis", 30)]','lista'],['{"a": [1, 2], "b": [3]}','diccionario'],['("x",)','tupla'],['{1, 2, 2, 3}','conjunto'],['[{"n": "Ana"}, {"n": "Luis"}]','lista'],['list((1, 2, 3))','lista'],['tuple([1, 2])','tupla'],['{"k": (1, 2)}','diccionario'],['"a,b,c".split(",")','lista']
+];
+const CLSW={lista:'Se localiza por posición y se puede modificar.',tupla:'Se localiza por posición y NO se puede modificar.',diccionario:'Se localiza por clave y se puede modificar. Pareja clave:valor entre llaves.',conjunto:'Sin orden ni posición; sin duplicados. Llaves pero sin ":".',cadena:'Texto entre comillas. Se localiza por posición y NO se puede modificar.'};
+G.cls=()=>{
+  const deck=shuffle(CLS).slice(0,10);let i=0,ok=0;const box=$('#game');
+  const draw=()=>{
+    if(i>=deck.length){addXP(ok*4);box.innerHTML=`<div class="q"><span class="lbl">Fin</span><h2>${ok}/${deck.length} correctas</h2><button class="btn" onclick="G.cls()" style="margin-top:1rem">Otra partida</button></div>`;say(ok>=8?'Reconoces las estructuras a primera vista.':'Fíjate en los delimitadores: [] ( ) {} y si hay ":".','wow');return}
+    const c=deck[i];
+    box.innerHTML=`<div class="q"><span class="lbl">${i+1}/${deck.length}</span><div class="prog"><div style="width:${i/deck.length*100}%"></div></div><div class="qt">¿Qué estructura es?</div><div class="bigq">${esc(c[0])}</div><div class="opts" style="grid-template-columns:repeat(3,1fr)">${Object.keys(CLSW).map(k=>`<button>${k}</button>`).join('')}</div><div id="cf"></div></div>`;
+    $$('.opts button',box).forEach(b=>b.onclick=()=>{const g=b.textContent===c[1];if(g)ok++;
+      $$('.opts button',box).forEach(x=>{x.disabled=true;if(x.textContent===c[1])x.classList.add('good');else if(x===b)x.classList.add('bad')});
+      say(g?pick(PRAISE):'Era '+c[1]+'.',g?'happy':'sad');
+      $('#cf').innerHTML=`<div class="fb ${g?'g':'b'}"><b>${c[1]}.</b> ${CLSW[c[1]]}</div><button class="btn" style="margin-top:.8rem" id="cn">Siguiente</button>`;$('#cn').onclick=()=>{i++;draw()}});
+  };draw();
+};
+/* ===================== ARRANQUE ===================== */
+paintXP();paintNav();V[S.tab]?V[S.tab]():V.inicio();
+</script>
+</body>
+</html>
