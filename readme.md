@@ -1,12 +1,11 @@
 # Ejercicios de clases de Python
 
-este repositorio sigue mis resoluciones (e intentos) de ejercicios basados en los propuestos por profesor Antonio, en ([este repositorio](https://github.com/amartinsierra/python_oct_26/))
+este repositorio sigue mis resoluciones (e intentos) de ejercicios basados en los propuestos por profesor Antonio, en [su repositorio de ejemplos](https://github.com/amartinsierra/python_oct_26/) y en su [repositorio de manipulación de archivos](https://github.com/amartinsierra/python_persistencia)
 
-También sigue ([este repositorio de manipulación de archivos](https://github.com/amartinsierra/python_persistencia))
+### Recursos
+[PDF´s y recursos de aprendizaje de python](/assets).
 
-([PDF´s y recursos de aprendizaje (ene sta repo)](/assets)).
+### Repos y perfiles de compañeros
+[Luis Enrique compañero](https://github.com/ovan07/curso_python)
 
-
-([Repo de Luis compañero](https://github.com/ovan07/curso_python))
-
-([Github de Aarón compañero](https://github.com/Aaronrrivera))
+[Aarón compañero](https://github.com/Aaronrrivera)
