@@ -9,7 +9,7 @@ Una tabla con los datos de ese mes. Y debajo de esa tabla:
 -Media de facturación de todas las tiendas
 -Tienda con mayor gasto de personal """
 
-import tiendas_repository as tr, streamlit as st, matplotlib.pyplot as plt
+import tiendas_repository as tr, streamlit as st
 
 tienda,mes = "",""
 
@@ -41,4 +41,3 @@ else:
     fotitos = st.columns([2, 3])
     fotitos[0].markdown(f"### Ventas por tienda")
     fotitos[1].pyplot(tr.snap_ventas(),width="content")
-
