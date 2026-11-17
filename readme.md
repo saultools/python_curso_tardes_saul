@@ -6,5 +6,7 @@ También sigue ([este repositorio de manipulación de archivos](https://github.c
 
 ([PDF´s y recursos de aprendizaje (ene sta repo)](/assets)).
 
+
 ([Repo de Luis compañero](https://github.com/ovan07/curso_python))
-([Github de Aarón compañero]https://github.com/Aaronrrivera))
+
+([Github de Aarón compañero](https://github.com/Aaronrrivera))
