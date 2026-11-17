@@ -1,4 +1,5 @@
 import polars as pl
+import matplotlib.pyplot as plt
 
 filepath = "../11-16-2026/ventas_tiendas.csv"
 df = pl.scan_csv(filepath)
@@ -44,4 +45,17 @@ def media_facturacion(mes):
 def mayor_gasto_personal(mes):
     return datos_tiendas(mes).sort(
         by="gastos_personal",descending=True).select(
-            "nombre_tienda","gastos_personal").row(0) 
+            "nombre_tienda","gastos_personal").row(0)
+# fin funciones de Luis
+
+def snap_ventas():
+    edificios = ["Oficinas", "Almacén", "Fábrica", "Tienda"]
+    consumo = [350, 220, 580, 190]
+
+    fig, ax = plt.subplots()
+    ax.pie(
+        consumo,
+        labels=edificios,
+        autopct="%1.1f%%"
+    )
+    return fig

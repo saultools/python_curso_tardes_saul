@@ -9,15 +9,15 @@ Una tabla con los datos de ese mes. Y debajo de esa tabla:
 -Media de facturación de todas las tiendas
 -Tienda con mayor gasto de personal """
 
-import tiendas_repository as tr, streamlit as st
+import tiendas_repository as tr, streamlit as st, matplotlib.pyplot as plt
 
 tienda,mes = "",""
 
 with st.sidebar:
-    st.subheader("Información por tienda")
+    st.header("Información por tienda")
     tienda=st.selectbox("Seleccione una tienda",tr.tiendas_ver(),index=None)
     
-    st.subheader("Información por mes")
+    st.header("Información por mes")
     mes=st.selectbox("Seleccione una tienda",tr.mes_ver(),index=None)
 
 if tienda is not None:
@@ -31,8 +31,14 @@ elif mes is not None:
 else:
     st.markdown("# Tabla general (todo)")
     st.dataframe(tr.df)
-    columnas = st.columns([2, 2, 3])
+
+    columnas = st.columns([2, 2, 1])
     columnas[0].write("texto 1")
     columnas[1].write("texto 2")
     columnas[2].markdown(f"<p style='font-size: 1em; font-weight: bold;'>texto</p>",unsafe_allow_html=True)
+
+    st.html("<hr>")
+    fotitos = st.columns([2, 3])
+    fotitos[0].markdown(f"### Ventas por tienda")
+    fotitos[1].pyplot(tr.snap_ventas(),width="content")
 
