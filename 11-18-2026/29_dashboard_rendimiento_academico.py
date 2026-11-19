@@ -2,7 +2,7 @@
 (cortado en la parte de abajo de la foto)
 usando información de alumnos.csv y notas.csv. 
 Separar las funciones en su propio archivo e importar como módulo.
-"""
+solución de Saúl:"""
 import streamlit as st, fda
 
 st.set_page_config(layout="wide",page_title="Dashboard Saúl")
@@ -21,11 +21,14 @@ with st.sidebar:
 st.markdown("# 📊 Dashboard de rendimiento académico")
 
 columnas = st.columns([2,2,2,2,2])
-columnas[0].metric(label="Alumnos evaluados", value="273 K")
-columnas[1].metric(label="Nota media", value="273 K")
-columnas[2].metric(label="Nota máxima", value="273 K")
-columnas[3].metric(label="Nota mínima", value="273 K")
-columnas[4].metric(label="Aprobados", value="273 K")
+nota = fda.metrica_nota(curso, asignatura, grupo, evaluacion)
+alumnos = fda.metrica_alumnos(curso, asignatura, grupo, evaluacion)
+
+columnas[0].metric(label="Alumnos evaluados", value=(alumnos.item(0, "total_alumnos")))
+columnas[1].metric(label="Nota media", value=f"{nota.item(0, 'media'):.2f}")
+columnas[2].metric(label="Nota máxima", value=(nota.item(0, "max")))
+columnas[3].metric(label="Nota mínima", value=(nota.item(0, "minima")))
+columnas[4].metric(label="Aprobados", value=f"{nota.item(0, "aprobados")}%")
 
 st.markdown("### Estadísticas por asignatura")
 st.dataframe(fda.estadisticas_asignatura(curso, asignatura, grupo, evaluacion),height="content")
