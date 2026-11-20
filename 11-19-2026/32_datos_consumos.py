@@ -40,3 +40,10 @@ print(f"4. Días superiores a la media: {dias_superiores}")
 print(f"5. Porcentajes diarios: {np.round(porcentajes, 2)}")
 print(f"6. Días 20% inferiores a la media: {dias_inferiores_20}")
 print(f"7. Coste total: {coste_total:.2f} €")
+
+
+# función np.zip #8 ejemplo: 
+a = np.array([1, 3, 5, 7])
+b = np.array([2, 4, 6, 8])
+c = np.array(list(zip(a, b)))
+print(c)
