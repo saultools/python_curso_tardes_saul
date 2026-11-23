@@ -6,17 +6,15 @@ b. Tendrá los siguientes métodos:
     multiplicar() Devuelve la multiplicación
     dividir() Devuelve la división del mayor entre el menor
 """
-
-class CALCULADORA:
-#    a,b=0,0
-    def __init__(self,a,b):    # Esto es un constructor
-        self.a = a
-        self.b = b
+class Calculadora:
+    def __init__(self,op1,op2):
+        self.operando_1=op1
+        self.operando_2=op2
     def sumar(self):
-        return self.a + self.b
-    def restar(self):
-        return self.a-self.b
-    def multiplicar(self):
-        return max(self.a,self.b)*min(self.a,self.b)
-    def dividir(self):
-        return max(self.a,self.b)/min(self.a,self.b)
+        return self.operando_1+self.operando_2
+    def restar(self):        
+        return max(self.operando_1,self.operando_2)-min(self.operando_1,self.operando_2)
+    def multiplicar(self):      
+        return self.operando_1*self.operando_2
+    def dividir(self):       
+        return max(self.operando_1,self.operando_2)/min(self.operando_1,self.operando_2) 
