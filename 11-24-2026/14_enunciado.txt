@@ -1,0 +1,62 @@
+1. Enunciado
+Una tienda online quiere desarrollar una aplicación para gestionar los pedidos de sus clientes.
+
+La aplicación debe permitir crear pedidos, añadir productos, calcular importes, aplicar descuentos y gestionar diferentes formas de pago.
+
+Se pide desarrollar el sistema utilizando programación orientada a objetos.
+2. Requisitos funcionales
+A. Gestión de productos
+
+Cada producto tendrá:
+- Código.
+- Nombre.
+- Precio.
+- Stock disponible.
+Se podrán consultar los datos de un producto y modificar su stock.
+
+B. Gestión de pedidos
+
+Un pedido estará compuesto por varios productos.
+
+Cada pedido tendrá:
+- Número de pedido.
+- Cliente.
+- Lista de líneas de pedido.
+- Estado (pendiente, pagado, enviado).
+Cada línea de pedido contendrá:
+- Producto.
+- Cantidad.
+El sistema deberá permitir:
+- Añadir productos al pedido.
+- Eliminar productos del pedido.
+- Calcular el importe de cada línea.
+- Calcular el importe total del pedido.
+- Mostrar el contenido del pedido.
+
+C. Aplicación de descuentos
+
+La tienda quiere ofrecer diferentes tipos de descuentos:
+- Descuento porcentual: reduce el importe un porcentaje determinado.
+- Descuento fijo: resta una cantidad fija al importe.
+- Sin descuento: mantiene el importe original.
+El sistema debe permitir aplicar cualquiera de estos descuentos a un pedido.
+
+D. Formas de pago
+
+La tienda admite tres formas de pago:
+- Tarjeta de crédito.
+- PayPal.
+- Transferencia bancaria.
+Cada forma de pago tendrá un comportamiento diferente
+Por ejemplo:
+- Tarjeta: añade una comisión del 1 %.
+- PayPal: añade una comisión del 2 %.
+- Transferencia: no tiene comisión.
+Cada modalidad deberá implementar un método pagar(importe) que simule el pago y devuelva el resultado de la operación. 
+
+Consideraciones:
+Un producto puede aparecer en diferentes pedidos.
+Un pedido puede contener varias líneas de pedido.
+La cantidad de unidades no pertenece al producto, sino a la línea de pedido.
+El cálculo de los descuentos debe ser independiente de la clase Pedido.
+El pedido no debe necesitar conocer los detalles internos de cada modalidad de pago.
