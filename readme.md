@@ -10,3 +10,6 @@ este repositorio sigue mis resoluciones (e intentos) de ejercicios basados en lo
 [PDF´s y recursos de aprendizaje de Saúl](/assets)
 
 [Repo de recursos de Antonio](https://github.com/amartinsierra/recursos_curso_python/tree/main)
+
+#### Notas sobre entornos virtuales:
+El profesor ha decidido usar entornos virtuales de python .venv distintos, de ahí que el curso se separa en múltiples repositorios. Yo he utilizado un solo entorno virtual. Se pueden ver los requerimientos de python para éste proyecto, en: _venv-requirements.txt_.
